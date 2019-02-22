@@ -15,7 +15,7 @@ class ViewController: UIViewController {
 
         let scrollView = UIScrollView(frame: view.bounds)
         scrollView.contentSize = CGSize(width: view.bounds.width, height: view.bounds.height * 4)
-        scrollView.contentOffset = CGPoint(x: 0.0, y: view.bounds.height * 1.5)
+        scrollView.contentOffset = CGPoint(x: 0.0, y: view.bounds.height * 1.65)
         view.addSubview(scrollView)
 
         let curvePlayground = CurvePlayground(viewSize: scrollView.contentSize)

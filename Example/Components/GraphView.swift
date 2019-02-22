@@ -212,7 +212,6 @@ public class GraphView: UIView {
 
         super.init(frame: frame)
 
-        progressAnimation(animated: false, time: 0.0)
         animationType = AnimationType.allItems.first ?? .position
 
         var bezierCurve = bezierCurve
@@ -250,8 +249,6 @@ public class GraphView: UIView {
         addSubview(animatingCircle)
         addSubview(segmentedControl)
         layer.addSublayer(curveLine)
-
-        progressAnimation()
     }
 
     @objc func segmentedControlDidChange() {
@@ -282,7 +279,7 @@ public class GraphView: UIView {
 
         let duration = animated ? currentDuration : 0.0
         let curve: TimingCurve = .cubic(bezier)
-        let animateToOld = time >= 0.5
+        let animateToOld = oldTime >= 0.5
 
         UIView.animate(withDuration: duration, curve: curve) {
             switch self.animationType {
@@ -290,22 +287,18 @@ public class GraphView: UIView {
                 allPaths = []
                 self.currentIndex = 0
 
-                if animated && self.progress.relativeTime == 0.0 {
-                    let relativeDuration = 1.0 / Double(self.paths.count - 1)
+                let relativeDuration = 1.0 / Double(self.paths.count - 1)
 
-                    for startIndex in 0..<self.paths.count-1 {
-                        let relativeStartTime = Double(startIndex) * relativeDuration
-                        
-                        UIView.addKeyframe(
-                            withRelativeStartTime: relativeStartTime,
-                            relativeDuration: relativeDuration,
-                            curve: .cubic(.linear)) {
-                            let index = animateToOld ? self.paths.count - 1 - startIndex : startIndex + 1
-                            self.animatingCircle.layer.path = self.paths[index]
-                        }
+                for startIndex in 0..<self.paths.count - 1 {
+                    let relativeStartTime = Double(startIndex) * relativeDuration
+                    
+                    UIView.addKeyframe(
+                        withRelativeStartTime: relativeStartTime,
+                        relativeDuration: relativeDuration,
+                        curve: .cubic(.linear)) {
+                        let index = animateToOld ? self.paths.count - 2 - startIndex : startIndex + 1
+                        self.animatingCircle.layer.path = self.paths[index]
                     }
-                } else {
-                    self.animatingCircle.layer.path = self.paths.first
                 }
             case .scale:
                 let oldPosition: CGAffineTransform = .identity
@@ -465,7 +458,7 @@ public class GraphView: UIView {
             highestPoint = bezierCurve.controlPoints.map(CGPoint.init).max(by: CGPoint.increasingOrder(forAxis: .y)) ?? .zero
 
             if startedTapInsideCircles {
-                progressAnimation(animated: true)
+                progressAnimation(animated: true, time: currentTime >= 0.5 ? 0.0 : 1.0)
                 return
             } else if !allPaths.isEmpty {
                 currentIndex = gestureLocation.x <= bounds.width / 2.0 ? currentIndex - 1 : currentIndex + 1
