@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Devices
 //
-//  Created by Hector Matos on 10/2/18.
+//  Created by Hector Matos on 10/4/18.
 //  Copyright © 2018 KrakenDev, LLC. All rights reserved.
 //
 
