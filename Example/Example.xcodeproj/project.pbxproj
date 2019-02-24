@@ -11,7 +11,6 @@
 		CB1EFE4D21643C4D00601FAF /* Components.h in Headers */ = {isa = PBXBuildFile; fileRef = CB1EFE4B21643C4D00601FAF /* Components.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CB1EFE5021643C4D00601FAF /* Components.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1EFE4921643C4D00601FAF /* Components.framework */; };
 		CB1EFE5121643C4D00601FAF /* Components.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB1EFE4921643C4D00601FAF /* Components.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CB1EFE5721643C6C00601FAF /* Vectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6D9A042163FF630064CB04 /* Vectors.swift */; };
 		CB1EFE5821643C6C00601FAF /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6D9A052163FF630064CB04 /* GraphView.swift */; };
 		CB1EFE5921643C6C00601FAF /* GraphContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6D9A032163FF630064CB04 /* GraphContainer.swift */; };
 		CB1EFE5C2164466B00601FAF /* Delight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE9BA40216426B200D104BA /* Delight.framework */; };
@@ -80,7 +79,6 @@
 		CB1EFE4B21643C4D00601FAF /* Components.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Components.h; sourceTree = "<group>"; };
 		CB1EFE4C21643C4D00601FAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB6D9A032163FF630064CB04 /* GraphContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphContainer.swift; sourceTree = "<group>"; };
-		CB6D9A042163FF630064CB04 /* Vectors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vectors.swift; sourceTree = "<group>"; };
 		CB6D9A052163FF630064CB04 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		CBE9BA39216426B200D104BA /* Delight.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Delight.xcodeproj; path = ../Delight.xcodeproj; sourceTree = "<group>"; };
 		CBE9BA4D21643B1400D104BA /* Devices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Devices.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,7 +117,6 @@
 				CB1EFE4B21643C4D00601FAF /* Components.h */,
 				CB6D9A032163FF630064CB04 /* GraphContainer.swift */,
 				CB6D9A052163FF630064CB04 /* GraphView.swift */,
-				CB6D9A042163FF630064CB04 /* Vectors.swift */,
 				CB06244A21A0ECEE00A15176 /* StarPath.swift */,
 				CB1EFE4C21643C4D00601FAF /* Info.plist */,
 			);
@@ -330,7 +327,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB06244B21A0ECEE00A15176 /* StarPath.swift in Sources */,
-				CB1EFE5721643C6C00601FAF /* Vectors.swift in Sources */,
 				CB1EFE5921643C6C00601FAF /* GraphContainer.swift in Sources */,
 				CB1EFE5821643C6C00601FAF /* GraphView.swift in Sources */,
 			);

@@ -26,21 +26,21 @@ public struct PathElement {
     private(set) var control1: CGPoint
     private(set) var control2: CGPoint
     private(set) var destination: CGPoint
-    private(set) var operation: Operation
+    
+    var operation: Operation
 
-    var bezierCurve: CubicBezierCurve {
+    public var bezierCurve: CubicBezierCurve {
         switch operation {
-        case .move:
-            return CubicBezierCurve(points: [CGPoint](repeating: destination, count: 4))
         case .addQuadCurve:
             let control1 = origin.lerp(to: self.control1, with: 2.0/3.0)
             let control2 = destination.lerp(to: self.control1, with: 2.0/3.0)
             return CubicBezierCurve(points: [origin, control1, control2, destination])
-        case .addCurve, .openSubpath:
+        case .move, .addCurve, .openSubpath:
             return CubicBezierCurve(points: [origin, control1, control2, destination])
         case .addLine, .closeSubpath:
             let control = origin.lerp(to: destination, with: 0.5)
-            return CubicBezierCurve(points: [origin, control, control, destination])
+            let element = PathElement(operation: .addQuadCurve, origin: origin, control1: control, control2: control, destination: destination)
+            return element.bezierCurve
         }
     }
 
@@ -61,18 +61,10 @@ public struct PathElement {
 
     public func add(to path: CGMutablePath) {
         switch operation {
-        case .move:
-            path.move(to: destination)
-        case .addLine:
-            path.addLine(to: destination)
-        case .addQuadCurve:
-            path.addQuadCurve(to: destination, control: control1)
-        case .addCurve:
-            path.addCurve(to: destination, control1: control1, control2: control2)
-        case .closeSubpath:
-            path.closeSubpath()
-        case .openSubpath:
+        case .move, .openSubpath:
             path.move(to: origin)
+            path.addCurve(to: destination, control1: control1, control2: control2)
+        default:
             path.addCurve(to: destination, control1: control1, control2: control2)
         }
     }
@@ -104,7 +96,7 @@ extension PathElement: Animatable {
 }
 
 extension PathElement: Segmentable {
-    func segmented(by amount: Int) -> [PathElement] {
+    public func segmented(by amount: Int) -> [PathElement] {
         var segments: [PathElement] = []
 
         switch operation {

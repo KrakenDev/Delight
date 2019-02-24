@@ -72,7 +72,7 @@ extension CGPath: Animatable {
         }
     }
 
-    private var path: Path {
+    public var path: Path {
         let convertPath = Path()
 
         if #available(iOS 11.0, *) {
@@ -111,20 +111,37 @@ extension CGPath: Animatable {
         let newPath = CGMutablePath()
         var fromSegments = fromPath.segments
         var toSegments = toPath.segments
-
+        
         if fromSegments.count != toSegments.count {
             let partCount = Swift.max(fromSegments.count, toSegments.count)
             fromSegments = fromPath.segmented(by: partCount)
             toSegments = toPath.segmented(by: partCount)
             allPaths.append(newPath)
-        }
 
-        for (fromSegment, toSegment) in zip(fromSegments, toSegments) {
-            let newSegment = fromSegment.lerp(to: toSegment, with: progress)
-            newSegment.add(to: newPath)
+            reorder(segments: &fromSegments, whereFirstElementIsMostSimilarTo: fromPath.highestCenteredElement)
+            reorder(segments: &toSegments, whereFirstElementIsMostSimilarTo: toPath.highestCenteredElement)
+        }
+        
+        zip(fromSegments, toSegments).forEach {
+            $0.lerp(to: $1, with: progress).add(to: newPath)
         }
 
         return newPath
+    }
+    
+    func reorder(segments: inout [PathElement], whereFirstElementIsMostSimilarTo comparedElement: PathElement?) {
+        guard var closestToSegment = segments.min(by: {
+            return comparedElement?.origin.distance(to: $0.origin) ?? 0.0 < comparedElement?.origin.distance(to: $1.origin) ?? 0.0
+        }), var closestIndex = segments.firstIndex(of: closestToSegment) else { return }
+        
+        closestToSegment.operation = .openSubpath
+        segments.remove(at: closestIndex)
+        segments.insert(closestToSegment, at: closestIndex)
+        
+        while closestIndex > 0 {
+            segments.append(segments.removeFirst())
+            closestIndex -= 1
+        }
     }
 }
 

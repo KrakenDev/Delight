@@ -98,7 +98,7 @@ extension CubicBezierCurve: TimingParameters {
 }
 
 extension CubicBezierCurve: Segmentable {
-    func segmented(by amount: Int) -> [CubicBezierCurve] {
+    public func segmented(by amount: Int) -> [CubicBezierCurve] {
         var segments: [CubicBezierCurve] = []
 
         var curve = self

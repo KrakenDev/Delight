@@ -10,6 +10,21 @@ import UIKit
 import Components
 
 class ViewController: UIViewController {
+    var curvePlayground: CurvePlayground?
+    
+    lazy var inputKeyCommands = [
+        UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: [], action: #selector(scrubLeft)),
+        UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: [], action: #selector(scrubRight))
+    ]
+    
+    override var keyCommands: [UIKeyCommand]? {
+        return inputKeyCommands
+    }
+    
+    public override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,10 +33,18 @@ class ViewController: UIViewController {
         scrollView.contentOffset = CGPoint(x: 0.0, y: view.bounds.height * 1.65)
         view.addSubview(scrollView)
 
-        let curvePlayground = CurvePlayground(viewSize: scrollView.contentSize)
-        curvePlayground.drawGraphView()
-        scrollView.addSubview(curvePlayground.view)
+        curvePlayground = CurvePlayground(viewSize: scrollView.contentSize)
+        curvePlayground?.drawGraphView()
+        scrollView.addSubview(curvePlayground!.view)
 
-        scrollView.backgroundColor = curvePlayground.view.backgroundColor
+        scrollView.backgroundColor = curvePlayground?.view.backgroundColor
+    }
+
+    @objc public func scrubLeft() {
+        curvePlayground?.graphView.scrub(to: (curvePlayground?.graphView.currentIndex ?? 1) - 1)
+    }
+    
+    @objc public func scrubRight() {
+        curvePlayground?.graphView.scrub(to: (curvePlayground?.graphView.currentIndex ?? -1) + 1)
     }
 }

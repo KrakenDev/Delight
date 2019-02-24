@@ -82,27 +82,18 @@ class AnimatingCircle: UIView {
             startAngle: angleForTheTopOfTheCircle,
             endAngle: endAngle,
             clockwise: true
-        ).cgPath
-
-        guard let mutableCirclePath = circlePath.mutableCopy() else { return circlePath }
-
-        let topCenter = viewCenter.moved(.toTheRight, by: radius)
-        let rightCenter = topCenter.moved([.downwards, .toTheRight], by: radius)
-        let bottomCenter = rightCenter.moved([.downwards, .toTheLeft], by: radius)
-        let leftCenter = bottomCenter.moved([.upwards, .toTheLeft], by: radius)
-
-        let topRightCurve = CubicBezierCurve(points: [topCenter, .zero, .zero, rightCenter]).circleApproximation.pathElement
-        let bottomRightCurve = CubicBezierCurve(points: [rightCenter, .zero, .zero, bottomCenter]).circleApproximation.pathElement
-        let bottomLeftCurve = CubicBezierCurve(points: [bottomCenter, .zero, .zero, leftCenter]).circleApproximation.pathElement
-        let topLeftCurve = CubicBezierCurve(points: [leftCenter, .zero, .zero, topCenter]).circleApproximation.pathElement
-
-        mutableCirclePath.move(to: topCenter)
-        topRightCurve.add(to: mutableCirclePath)
-        bottomRightCurve.add(to: mutableCirclePath)
-        bottomLeftCurve.add(to: mutableCirclePath)
-        topLeftCurve.add(to: mutableCirclePath)
-
-        return mutableCirclePath
+        )
+        let offsetPath = UIBezierPath(
+            arcCenter: viewCenter + CGPoint(x: radius, y: radius),
+            radius: radius,
+            startAngle: angleForTheTopOfTheCircle,
+            endAngle: endAngle,
+            clockwise: true
+        )
+        
+        offsetPath.append(circlePath)
+        
+        return offsetPath.cgPath
     }()
 
     lazy var heart: CGPath = {
@@ -206,7 +197,7 @@ public class GraphView: UIView {
             segmentedControl.center = CGPoint(x: bounds.width / 2.0, y: bounds.height + segmentedControl.bounds.height + 8.0)
         }
     }
-
+    
     required init(bezierCurve: CubicBezierCurve, frame: CGRect) {
         animationType = .position
 
@@ -280,6 +271,8 @@ public class GraphView: UIView {
         let duration = animated ? currentDuration : 0.0
         let curve: TimingCurve = .cubic(bezier)
         let animateToOld = oldTime >= 0.5
+        
+        animatingCircle.layer.sublayers = []
 
         UIView.animate(withDuration: duration, curve: curve) {
             switch self.animationType {
@@ -339,7 +332,7 @@ public class GraphView: UIView {
 
     class CustomGesture: UITapGestureRecognizer {}
 
-    var currentIndex = 0
+    public var currentIndex = 0
 
     @discardableResult func plot(_ color: UIColor, dotAt point: ControlPoint, size: CGFloat = 8.0) -> UIView {
         let plotPointSize = CGSize(width: size, height: size)
@@ -461,9 +454,7 @@ public class GraphView: UIView {
                 progressAnimation(animated: true, time: currentTime >= 0.5 ? 0.0 : 1.0)
                 return
             } else if !allPaths.isEmpty {
-                currentIndex = gestureLocation.x <= bounds.width / 2.0 ? currentIndex - 1 : currentIndex + 1
-                currentIndex = min(max(currentIndex, 0), allPaths.count - 1)
-                self.animatingCircle.layer.path = allPaths[currentIndex]
+                gestureLocation.x <= bounds.width / 2.0 ? scrubLeft() : scrubRight()
             }
         } else if let movingControlPoint = movingControlPoint {
             movingControlPoint.view.center = location
@@ -477,5 +468,25 @@ public class GraphView: UIView {
         if oldTime != currentTime || isMovingControlPoint {
             progressAnimation(time: currentTime)
         }
+    }
+    
+    private func scrubLeft() {
+        scrub(to: currentIndex - 1)
+    }
+    
+    private func scrubRight() {
+        scrub(to: currentIndex + 1)
+    }
+    
+    public func scrub(to index: Int) {
+        guard index >= 0 && index < allPaths.count else { return }
+        currentIndex = min(max(index, 0), allPaths.count - 1)
+        
+        animatingCircle.layer.path = allPaths[currentIndex]
+        
+        let sublayers = animatingCircle.layer.segmented(by: 0)
+        animatingCircle.layer.sublayers = []
+        
+        sublayers.forEach(animatingCircle.layer.addSublayer)
     }
 }

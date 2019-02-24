@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		771A1BA82222748B00C435A3 /* Vectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A1BA72222748B00C435A3 /* Vectors.swift */; };
+		771A1BA92222748B00C435A3 /* Vectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A1BA72222748B00C435A3 /* Vectors.swift */; };
+		771A1BAA2222748B00C435A3 /* Vectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A1BA72222748B00C435A3 /* Vectors.swift */; };
 		CB06243921A0AB4B00A15176 /* SpringTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB06243821A0AB4B00A15176 /* SpringTiming.swift */; };
 		CB06243A21A0AB4B00A15176 /* SpringTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB06243821A0AB4B00A15176 /* SpringTiming.swift */; };
 		CB06243B21A0AB4B00A15176 /* SpringTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB06243821A0AB4B00A15176 /* SpringTiming.swift */; };
@@ -109,6 +112,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		771A1BA72222748B00C435A3 /* Vectors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vectors.swift; sourceTree = "<group>"; };
 		CB06243821A0AB4B00A15176 /* SpringTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringTiming.swift; sourceTree = "<group>"; };
 		CB06243C21A0AECD00A15176 /* TimingParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimingParameters.swift; sourceTree = "<group>"; };
 		CB06244021A0C5ED00A15176 /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 				CB4CDD18214AC01C00772063 /* Cocoa+Interoperability.swift */,
 				CBB59D59214A9EEC00AD47DA /* UIKit+Interoperability.swift */,
 				CB621B79214B699D004C2624 /* Utilities.swift */,
+				771A1BA72222748B00C435A3 /* Vectors.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -469,6 +474,7 @@
 				CBB71693215EE7BF001EF233 /* CGColor+Animatable.swift in Sources */,
 				CB621B7A214B699D004C2624 /* Utilities.swift in Sources */,
 				CBB716A72162BEFF001EF233 /* LayerValueProvider.swift in Sources */,
+				771A1BA82222748B00C435A3 /* Vectors.swift in Sources */,
 				CBACBAA7217527B300EE232F /* CATransaction+Transactor.swift in Sources */,
 				CBACBAAF2175536800EE232F /* CALayer+Interception.swift in Sources */,
 				CB2E908F2165ADD6003C8689 /* LayerAnimation.swift in Sources */,
@@ -507,6 +513,7 @@
 				CB4ABB8E214AC72600C856C0 /* ControlPoint.swift in Sources */,
 				CBB716A92162BEFF001EF233 /* LayerValueProvider.swift in Sources */,
 				CBB71695215EE7BF001EF233 /* CGColor+Animatable.swift in Sources */,
+				771A1BA92222748B00C435A3 /* Vectors.swift in Sources */,
 				CB621B7C214B699D004C2624 /* Utilities.swift in Sources */,
 				CBACBAB02175536800EE232F /* CALayer+Interception.swift in Sources */,
 				CBACBAA8217527B300EE232F /* CATransaction+Transactor.swift in Sources */,
@@ -545,6 +552,7 @@
 				CB4ABB8F214AC72700C856C0 /* ControlPoint.swift in Sources */,
 				CB621B7D214B699D004C2624 /* Utilities.swift in Sources */,
 				CBACBAA9217527B300EE232F /* CATransaction+Transactor.swift in Sources */,
+				771A1BAA2222748B00C435A3 /* Vectors.swift in Sources */,
 				CBACBAB12175536800EE232F /* CALayer+Interception.swift in Sources */,
 				CB2E90912165ADD6003C8689 /* LayerAnimation.swift in Sources */,
 				CB621B82214B69DD004C2624 /* KeyPathProvider.swift in Sources */,

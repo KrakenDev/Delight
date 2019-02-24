@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import ObjectiveC
+import UIKit
 
 func execute(block: VoidBlock) { block() }
 func identity<T>(for object: T) -> T { return object }
@@ -26,7 +27,7 @@ enum MethodType {
     case `class`
 }
 
-protocol Segmentable {
+public protocol Segmentable {
     associatedtype Segment: Segmentable
     func segmented(by amount: Int) -> [Segment]
 }
@@ -66,6 +67,40 @@ extension CFTypeProtocol {
 
 extension CGPath: CFTypeProtocol {}
 extension CGColor: CFTypeProtocol {}
+
+extension CAShapeLayer: Segmentable {
+    public func segmented(by amount: Int) -> [CAShapeLayer] {
+        guard let segments = path?.path.segments else { return [self] }
+        
+        var layers: [CAShapeLayer] = []
+        for (segment, color) in zip(segments, UIColor.white.segmented(by: segments.count)) {
+            let debugCurveLayer = CAShapeLayer()
+            debugCurveLayer.lineWidth = 3.0
+            debugCurveLayer.strokeColor = color.cgColor
+            debugCurveLayer.fillColor = UIColor.clear.cgColor
+            
+            let curve = segment.bezierCurve
+            let mutableBezierPath = UIBezierPath()
+            mutableBezierPath.move(to: curve.c0.cgPoint)
+            mutableBezierPath.addCurve(to: curve.c3.cgPoint, controlPoint1: curve.c1.cgPoint, controlPoint2: curve.c2.cgPoint)
+            
+            debugCurveLayer.path = mutableBezierPath.cgPath
+            layers.append(removingPossibleDuplicate: debugCurveLayer)
+        }
+        
+        return layers
+    }
+}
+
+extension UIColor: Segmentable {
+    public func segmented(by amount: Int) -> [UIColor] {
+        var hue: CGFloat = 0.0
+        getHue(&hue, saturation: nil, brightness: nil, alpha: nil)
+        return stride(from: 0.0, to: 1.0, by: 1.0/CGFloat(amount)).map {
+            UIColor(hue: hue + $0, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+        }
+    }
+}
 
 extension Collection {
     func map<T>(_ keyPath: KeyPath<Element, T>) -> [T] {
