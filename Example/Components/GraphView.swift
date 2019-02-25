@@ -270,7 +270,6 @@ public class GraphView: UIView {
 
         let duration = animated ? currentDuration : 0.0
         let curve: TimingCurve = .cubic(bezier)
-        let animateToOld = oldTime >= 0.5
         
         animatingCircle.layer.sublayers = []
 
@@ -278,29 +277,26 @@ public class GraphView: UIView {
             switch self.animationType {
             case .path:
                 allPaths = []
-                self.currentIndex = 0
 
-                let relativeDuration = 1.0 / Double(self.paths.count - 1)
-
-                for startIndex in 0..<self.paths.count - 1 {
-                    let relativeStartTime = Double(startIndex) * relativeDuration
+                guard animated else {
+                    let animatingFromIndex = self.currentPathIndex - 1 < 0 ? self.paths.count - 1 : self.currentPathIndex - 1
+                    self.animatingCircle.layer.path = self.paths[animatingFromIndex].lerp(to: self.paths[self.currentPathIndex], with: CGFloat(self.progress.relativeValue))
                     
-                    UIView.addKeyframe(
-                        withRelativeStartTime: relativeStartTime,
-                        relativeDuration: relativeDuration,
-                        curve: .cubic(.linear)) {
-                        let index = animateToOld ? self.paths.count - 2 - startIndex : startIndex + 1
-                        self.animatingCircle.layer.path = self.paths[index]
-                    }
+                    break
                 }
+                
+                self.currentPathIndex = self.currentPathIndex == self.paths.count - 1 ? 0 : self.currentPathIndex + 1
+                self.animatingCircle.layer.path = self.paths[self.currentPathIndex]
             case .scale:
                 let oldPosition: CGAffineTransform = .identity
                 let newPosition = CGAffineTransform(scaleX: 4.0, y: 4.0)
-                if !animated {
+
+                guard animated else {
                     self.animatingCircle.transform = oldPosition.lerp(to: newPosition, with: CGFloat(self.progress.relativeValue))
-                } else {
-                    self.animatingCircle.transform = animateToOld ? oldPosition : newPosition
+                    break
                 }
+
+                self.animatingCircle.transform = self.animatingCircle.transform.isIdentity ? newPosition : oldPosition
             case .position:
                 let getPosition: (Bool) -> CGPoint = {
                     return CGPoint(
@@ -312,20 +308,24 @@ public class GraphView: UIView {
                 let oldPosition = getPosition(false)
                 let newPosition = getPosition(true)
 
-                if !animated {
+                guard animated else {
                     self.animatingCircle.center = oldPosition.lerp(to: newPosition, with: CGFloat(self.progress.relativeValue))
-                } else {
-                    self.animatingCircle.center = animateToOld ? oldPosition : newPosition
+                    break
                 }
+
+                self.animatingCircle.center = self.animatingCircle.center.y == self.bounds.height ? newPosition : oldPosition
             }
-
-            let timingProgressions = bezier.progressions(from: duration).map { $0.relativeTime }
-            let frameProgressions = zip(timingProgressions.dropLast(), timingProgressions.dropFirst())
-
-            for (relativeStartTime, nextStartTime) in frameProgressions {
-                UIView.addKeyframe(withRelativeStartTime: relativeStartTime, relativeDuration: nextStartTime - relativeStartTime, curve: .cubic(.linear)) {
-                    self.updateFunction(oldTime.lerp(to: self.currentTime, with: nextStartTime))
+            
+            if animated {
+                let timingProgressions = bezier.progressions(from: duration).map { $0.relativeTime }
+                let frameProgressions = zip(timingProgressions.dropLast(), timingProgressions.dropFirst())
+                
+                for (relativeStartTime, nextStartTime) in frameProgressions {
+                    UIView.addKeyframe(withRelativeStartTime: relativeStartTime, relativeDuration: nextStartTime - relativeStartTime, curve: .cubic(.linear)) {
+                        self.updateFunction(oldTime.lerp(to: self.currentTime, with: nextStartTime))
+                    }
                 }
+                self.currentIndex = max(allPaths.count - 1, 0)
             }
         }
     }
@@ -333,6 +333,7 @@ public class GraphView: UIView {
     class CustomGesture: UITapGestureRecognizer {}
 
     public var currentIndex = 0
+    public var currentPathIndex = 0
 
     @discardableResult func plot(_ color: UIColor, dotAt point: ControlPoint, size: CGFloat = 8.0) -> UIView {
         let plotPointSize = CGSize(width: size, height: size)

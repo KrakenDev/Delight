@@ -38,9 +38,10 @@ public struct PathElement {
         case .move, .addCurve, .openSubpath:
             return CubicBezierCurve(points: [origin, control1, control2, destination])
         case .addLine, .closeSubpath:
-            let control = origin.lerp(to: destination, with: 0.5)
-            let element = PathElement(operation: .addQuadCurve, origin: origin, control1: control, control2: control, destination: destination)
-            return element.bezierCurve
+            let halfway = origin.lerp(to: destination, with: 0.5)
+            let control1 = origin.lerp(to: halfway, with: 2.0/3.0)
+            let control2 = destination.lerp(to: halfway, with: 2.0/3.0)
+            return CubicBezierCurve(points: [origin, control1, control2, destination])
         }
     }
 
