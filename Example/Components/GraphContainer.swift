@@ -2,10 +2,10 @@ import Foundation
 import UIKit
 import Delight
 
-let padding: CGFloat = 64.0
+let padding: Double = 64.0
 
 public class CurvePlayground {
-    let graphMultiplier: CGFloat = 5.0
+    let graphMultiplier: Double = 5.0
     let entireViewSize: CGSize
     let timeline = UIView(frame: .zero)
     let descriptionLabel = UILabel()
@@ -54,7 +54,7 @@ public class CurvePlayground {
 
         var newPoints: [ControlPoint] = []
         for i in 0...p.count - 2 {
-            newPoints.append(p[i].lerp(to: p[i+1], with: CGFloat(t)))
+            newPoints.append(p[i].lerp(to: p[i+1], with: Double(t)))
         }
         return lineEndpoints(for: newPoints, at: t, currentEndpoints: newEndpoints)
     }
@@ -72,7 +72,7 @@ public class CurvePlayground {
             }
 
             let curvePoint = self.graphView.bezierCurve.progress(at: Double(time))
-            linearReferencePoint.center = self.graphView.coordinate(for: ControlPoint(x: CGFloat(curvePoint.relativeTime), y: CGFloat(curvePoint.relativeValue)))
+            linearReferencePoint.center = self.graphView.coordinate(for: ControlPoint(x: Double(curvePoint.relativeTime), y: Double(curvePoint.relativeValue)))
 
             let lowestPoint = [linearReferencePoint.center, CGPoint(x: 0.0, y: self.graphView.bounds.height)].max(by: CGPoint.increasingOrder(forAxis: .y))?.y ?? 0.0
             let highestPoint = [linearReferencePoint.center, CGPoint(x: 0.0, y: self.graphView.bounds.height)].min(by: CGPoint.increasingOrder(forAxis: .y))?.y ?? 0.0
@@ -80,7 +80,7 @@ public class CurvePlayground {
             // Move timeline to show our current t
             var timelineFrame = self.timeline.frame
             if !self.graphView.isMovingControlPoint {
-                timelineFrame.origin.x = self.graphView.frame.minX + self.graphSize * CGFloat(time)
+                timelineFrame.origin.x = self.graphView.frame.minX + self.graphSize * Double(time)
             }
             timelineFrame.origin.y = self.graphView.frame.minY + min(highestPoint, lowestPoint)
             timelineFrame.size.width = 1.0

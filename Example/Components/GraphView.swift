@@ -37,7 +37,7 @@ struct Movement: OptionSet {
 }
 
 extension CGPoint {
-    func moved(_ movement: Movement, by distance: CGFloat) -> CGPoint {
+    func moved(_ movement: Movement, by distance: Double) -> CGPoint {
         var position = self
 
         if movement.contains(.toTheLeft) {
@@ -68,12 +68,12 @@ class AnimatingCircle: UIView {
 
     lazy var star: CGPath = starPath(for: layer, points: 5)
     lazy var circle: CGPath = {
-        let offset = CGFloat(16.0)
+        let offset = Double(16.0)
         let radius = ((bounds.width * 2/3) / 2.0) - offset
         let viewCenter = CGPoint(x: radius + offset * 1.5, y: radius + offset * 1.5)
 
-        let angleForTheTopOfTheCircle: CGFloat = .pi * 1.5
-        let wholeCircleAngle: CGFloat = .pi * 2.0
+        let angleForTheTopOfTheCircle: Double = .pi * 1.5
+        let wholeCircleAngle: Double = .pi * 2.0
         let endAngle = angleForTheTopOfTheCircle + wholeCircleAngle
 
         let circlePath = UIBezierPath(
@@ -100,9 +100,9 @@ class AnimatingCircle: UIView {
         let heartPath = UIBezierPath()
         //Scaling will take bounds from the originalRect passed
         let originalRect = bounds
-        let scaledWidth = (originalRect.width * CGFloat(0.8))
+        let scaledWidth = (originalRect.width * Double(0.8))
         let scaledXValue = ((originalRect.width) - scaledWidth) / 2
-        let scaledHeight = (originalRect.height * CGFloat(0.65))
+        let scaledHeight = (originalRect.height * Double(0.65))
         let scaledYValue = ((originalRect.height) - scaledHeight) / 2
 
         let scaledRect = CGRect(
@@ -280,7 +280,7 @@ public class GraphView: UIView {
 
                 guard animated else {
                     let animatingFromIndex = self.currentPathIndex - 1 < 0 ? self.paths.count - 1 : self.currentPathIndex - 1
-                    self.animatingCircle.layer.path = self.paths[animatingFromIndex].lerp(to: self.paths[self.currentPathIndex], with: CGFloat(self.progress.relativeValue))
+                    self.animatingCircle.layer.path = self.paths[animatingFromIndex].lerp(to: self.paths[self.currentPathIndex], with: Double(self.progress.relativeValue))
                     
                     break
                 }
@@ -292,7 +292,7 @@ public class GraphView: UIView {
                 let newPosition = CGAffineTransform(scaleX: 4.0, y: 4.0)
 
                 guard animated else {
-                    self.animatingCircle.transform = oldPosition.lerp(to: newPosition, with: CGFloat(self.progress.relativeValue))
+                    self.animatingCircle.transform = oldPosition.lerp(to: newPosition, with: Double(self.progress.relativeValue))
                     break
                 }
 
@@ -309,7 +309,7 @@ public class GraphView: UIView {
                 let newPosition = getPosition(true)
 
                 guard animated else {
-                    self.animatingCircle.center = oldPosition.lerp(to: newPosition, with: CGFloat(self.progress.relativeValue))
+                    self.animatingCircle.center = oldPosition.lerp(to: newPosition, with: Double(self.progress.relativeValue))
                     break
                 }
 
@@ -335,7 +335,7 @@ public class GraphView: UIView {
     public var currentIndex = 0
     public var currentPathIndex = 0
 
-    @discardableResult func plot(_ color: UIColor, dotAt point: ControlPoint, size: CGFloat = 8.0) -> UIView {
+    @discardableResult func plot(_ color: UIColor, dotAt point: ControlPoint, size: Double = 8.0) -> UIView {
         let plotPointSize = CGSize(width: size, height: size)
         let newPlotPoint = UIView(frame: CGRect(origin: .zero, size: plotPointSize))
         newPlotPoint.backgroundColor = color
@@ -396,7 +396,7 @@ public class GraphView: UIView {
 
     func controlPoint(at location: CGPoint) -> GraphControlPoint? {
         return controlPoints.first {
-            let inset = CGFloat(9.0)
+            let inset = Double(9.0)
             var dotFrame = $0.view.frame
             dotFrame.origin.x -= inset
             dotFrame.origin.y -= inset
@@ -407,7 +407,7 @@ public class GraphView: UIView {
     }
 
     public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        let padding: CGFloat = 12.0
+        let padding: Double = 12.0
         let lowestY = coordinate(for: lowestPoint.controlPoint).y
         let highestY = coordinate(for: highestPoint.controlPoint).y
         return point.x >= bounds.minX - padding && point.x <= bounds.maxX + padding && point.y >= highestY - padding && point.y <= max(lowestY, segmentedControl.frame.maxY) + padding

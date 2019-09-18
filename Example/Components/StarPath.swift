@@ -14,14 +14,14 @@ func starPath(for shapeLayer: CAShapeLayer, points: Int = 5) -> CGPath {
 
     let center = CGPoint(x: shapeLayer.bounds.width / 2.0, y: shapeLayer.bounds.height / 2.0)
 
-    let numberOfPoints = CGFloat(points)
+    let numberOfPoints = Double(points)
     let numberOfLineSegments = Int(numberOfPoints * 2.0)
     let theta = .pi / numberOfPoints
 
     let circumscribedRadius = center.x - 16.0
     let outerRadius = circumscribedRadius * 1.039
     let excessRadius = outerRadius - circumscribedRadius
-    let innerRadius = CGFloat(outerRadius * 0.382)
+    let innerRadius = Double(outerRadius * 0.382)
 
     let leftEdgePointX = (center.x + cos(4.0 * theta) * outerRadius) + excessRadius
     let horizontalOffset = leftEdgePointX / 2.0
@@ -35,8 +35,8 @@ func starPath(for shapeLayer: CAShapeLayer, points: Int = 5) -> CGPath {
     for i in 0..<numberOfLineSegments {
         let radius = i % 2 == 0 ? outerRadius : innerRadius
 
-        let pointX = offsetCenter.x + cos(CGFloat(i) * theta) * radius
-        let pointY = offsetCenter.y + sin(CGFloat(i) * theta) * radius
+        let pointX = offsetCenter.x + cos(Double(i) * theta) * radius
+        let pointY = offsetCenter.y + sin(Double(i) * theta) * radius
         let point = CGPoint(x: pointX, y: pointY)
 
         if i == 0 {
@@ -51,7 +51,7 @@ func starPath(for shapeLayer: CAShapeLayer, points: Int = 5) -> CGPath {
     // Rotate the path so the star points up as expected
     var pathTransform  = CGAffineTransform.identity
     pathTransform = pathTransform.translatedBy(x: center.x, y: center.y)
-    pathTransform = pathTransform.rotated(by: CGFloat(-.pi / 2.0))
+    pathTransform = pathTransform.rotated(by: Double(-.pi / 2.0))
     pathTransform = pathTransform.translatedBy(x: -center.x, y: -center.y)
 
     starPath.apply(pathTransform)
