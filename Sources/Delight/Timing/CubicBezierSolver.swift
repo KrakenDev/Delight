@@ -138,15 +138,15 @@ extension CubicBezierCurve {
             let possibleRoot: Double // complex
             let rootOfUnity = i.rootOfUnity
             
-            if (3*p == 0 || 2*q == 0) {
+            if 3*p == 0 || 2*q == 0 {
                 let pIsZeroRoot: Double = (-2*q).cubeRoot * rootOfUnity // complex
                 let qIsZeroRoot: Double = -1^i * (-3*p).squareRoot * min(i, 1) // complex
                 possibleRoot = (p == 0) ? pIsZeroRoot : qIsZeroRoot
-            } else if (discriminant == 0) {
+            } else if discriminant == 0 {
                 // Δ = 0: 3 real roots, but two of them are equal
                 let power: Double = (i == 0) ? 1 : 2
                 possibleRoot = 2^(2-power) * (q*(-1^power)).cubeRoot
-            } else if (creal(discriminant) > 0) {
+            } else if creal(discriminant) > 0 {
                 // Δ > 0: 1 real root, 2 imaginary roots
                 let u = (discriminant.squareRoot - q).cubeRoot * rootOfUnity // complex
                 let v = (discriminant.squareRoot + q).cubeRoot * conj(rootOfUnity) // complex
