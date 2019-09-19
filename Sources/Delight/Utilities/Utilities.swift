@@ -5,6 +5,7 @@
 //  Created by Hector Matos on 9/14/18.
 //
 
+import Complex
 import Foundation
 import ObjectiveC
 import UIKit
@@ -186,14 +187,6 @@ extension BinaryFloatingPoint {
         return Double(self)
     }
     
-    var rootOfUnity: /*complex*/ Double {
-        return (self > .zero) ? (-1.0
-            + Double.I
-            * 3.0.squareRoot
-            * -1.0^Double(self)
-        ).halved : 1.0
-    }
-
     func clamped(to range: ClosedRange<Double>) -> Self {
         return Self(min(max(range.lowerBound, Double(self)), range.upperBound))
     }
@@ -207,6 +200,21 @@ extension BinaryFloatingPoint {
     }
     static func ^(lhs: Self, rhs: Double) -> Self {
         return Self(pow(Double(lhs), rhs))
+    }
+}
+
+extension Double {
+    var rootOfUnity: Complex<Double> {
+        let a = (1.0).i * 3.0.squareRoot
+        return (self > .zero) ? (Complex(-1.0)
+            + a * Complex(-1.0^self)
+        ).halved : Complex(1.0)
+    }
+}
+
+extension Complex where R == Double {
+    var halved: Self {
+        return self / Complex(2.0)
     }
 }
 

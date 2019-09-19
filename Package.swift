@@ -9,7 +9,10 @@ let package = Package(
     products: [
         .library(name: "Delight", targets: ["Delight"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/dankogai/swift-complex", from: "4.2.0")
+    ],
     targets: [
-        .target(name: "Delight")
+        .target(name: "Delight", dependencies: ["Complex"], path: "Sources/Delight")
     ]
 )

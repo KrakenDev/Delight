@@ -7,7 +7,6 @@
 
 import UIKit
 import ObjectiveC
-import UIKit
 
 class LayerKeyframe<T: Animatable>: Keyframe {
     let timing: KeyframeTiming<T.Progression>

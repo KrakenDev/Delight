@@ -5,6 +5,8 @@
 //  Created by Hector Matos on 9/28/18.
 //
 
+import UIKit
+
 public protocol Displayable {
     static var maxFPS: Int { get }
     static var inheritedAnimationDuration: Double { get }
@@ -40,18 +42,18 @@ extension Displayable {
          * values within an animation. So let's make sure we aren't forcing the system to do
          * an unnecessary animation.
          */
-        guard !Transaction.disableActions && duration >= 1.0 / Double(maxFPS) else {
+        guard !CATransaction.disableActions() && duration >= 1.0 / Double(maxFPS) else {
             return executeWithoutAnimation(animations, completion: completion)
         }
 
         let inheritedDuration = inheritedAnimationDuration
 
         setAnimationDuration(0.0)
-        Transaction.begin()
+        CATransaction.begin()
         AnimationQueue.begin()
 
-        Transaction.animationDuration = 0.0
-        Transaction.completionBlock = {
+        CATransaction.setAnimationDuration(.zero)
+        CATransaction.setCompletionBlock {
             completion?(true)
         }
 
@@ -65,12 +67,12 @@ extension Displayable {
         )
 
         AnimationQueue.commit()
-        Transaction.commit()
+        CATransaction.commit()
         setAnimationDuration(inheritedDuration)
     }
 
     public static func addKeyframe(withRelativeStartTime frameStartTime: Double, relativeDuration frameDuration: Double, curve: TimingCurve = .cubic(.linear), animations: @escaping AnimationBlock) {
-        guard frameDuration > 0.0 && !Transaction.disableActions else { return executeWithoutAnimation(animations) }
+        guard frameDuration > 0.0 && !CATransaction.disableActions() else { return executeWithoutAnimation(animations) }
         
         AnimationQueue.enqueue(
             KeyframeContainer(
@@ -83,11 +85,11 @@ extension Displayable {
     }
 
     private static func executeWithoutAnimation(_ animations: AnimationBlock, completion: AnimationCompletion? = nil) {
-        Transaction.begin()
-        Transaction.animationDuration = 0.0
-        Transaction.disableActions = true
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(.zero)
+        CATransaction.setDisableActions(true)
         animations()
         completion?(true)
-        Transaction.commit()
+        CATransaction.commit()
     }
 }

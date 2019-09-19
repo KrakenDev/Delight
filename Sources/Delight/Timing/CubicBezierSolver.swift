@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Complex
 
 extension CubicBezierCurve {
     enum Axes {
@@ -21,6 +22,12 @@ extension CubicBezierCurve {
         var all: [Double] {
             return [a, b, c, d]
         }
+    }
+}
+
+extension Complex {
+    public static func cbrt(_ value: Self) -> Self {
+        return pow(value, Self(1/3))
     }
 }
 
@@ -130,42 +137,44 @@ extension CubicBezierCurve {
         
         let p = (3*b - a.squared) / 9
         let q = (2*a.cubed - 9*a*b + 27*c) / 54
-        let root = 0
-        let discriminant = p.cubed + q.squared // Δ
-        
+        let discriminant = Complex(p.cubed + q.squared) // Δ
+        var root = Complex(0.0)
+
         (0...2).forEach { i in
             let i = Double(i)
-            let possibleRoot: Double // complex
             let rootOfUnity = i.rootOfUnity
-            
+            var possibleRoot: Complex<Double>
+
             if 3*p == 0 || 2*q == 0 {
-                let pIsZeroRoot: Double = (-2*q).cubeRoot * rootOfUnity // complex
-                let qIsZeroRoot: Double = -1^i * (-3*p).squareRoot * min(i, 1) // complex
-                possibleRoot = (p == 0) ? pIsZeroRoot : qIsZeroRoot
-            } else if discriminant == 0 {
+                let pIsZeroRoot: Complex<Double> = (-2*q).cubeRoot * rootOfUnity
+                let qIsZeroRoot = -1^i * (-3*p).squareRoot * min(i, 1)
+                possibleRoot = (p == 0) ? pIsZeroRoot : Complex(qIsZeroRoot)
+            } else if discriminant == Complex(0.0) {
                 // Δ = 0: 3 real roots, but two of them are equal
                 let power: Double = (i == 0) ? 1 : 2
-                possibleRoot = 2^(2-power) * (q*(-1^power)).cubeRoot
-            } else if creal(discriminant) > 0 {
+                possibleRoot = Complex(2^(2-power) * (q*(-1^power)).cubeRoot)
+            } else if discriminant.real > 0 {
                 // Δ > 0: 1 real root, 2 imaginary roots
-                let u = (discriminant.squareRoot - q).cubeRoot * rootOfUnity // complex
-                let v = (discriminant.squareRoot + q).cubeRoot * conj(rootOfUnity) // complex
+                let m = Complex.sqrt(discriminant) - q
+                let u = Complex.cbrt(m) * rootOfUnity
+                let n = Complex.sqrt(discriminant) + q
+                let v = Complex.cbrt(n) * rootOfUnity.conj
                 possibleRoot = u - v
             } else {
                 // Δ < 0: 3 real unique roots
                 let r = abs(p).cubed.squareRoot
                 let phi = acos(-q/r) + i.doubled * .pi // Φ
-                possibleRoot = r.cubeRoot.doubled * cos(phi/3)
+                possibleRoot = Complex(r.cubeRoot.doubled * cos(phi/3))
             }
             
             possibleRoot += simpleRoot
             
-            if cimag(possibleRoot) == 0 && creal(possibleRoot).isUniform {
-                root = creal(possibleRoot)
+            if possibleRoot.imag == 0 && possibleRoot.real.isUniform {
+                root = possibleRoot
             }
         }
         
-        return creal(root)
+        return root.real
     }
 
     /**

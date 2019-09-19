@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import UIKit
 
 class KeyframeContainer: AnimationContainer {
     let timing: KeyframeTiming<Double>

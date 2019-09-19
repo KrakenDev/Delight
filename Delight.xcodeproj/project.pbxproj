@@ -1,490 +1,807 @@
 // !$*UTF8*$!
 {
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		OBJ_59 /* Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Animatable.swift */; };
-		OBJ_60 /* CGColor+Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* CGColor+Animatable.swift */; };
-		OBJ_61 /* CGPath+Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* CGPath+Animatable.swift */; };
-		OBJ_62 /* KeyPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* KeyPathProvider.swift */; };
-		OBJ_63 /* LayerValueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* LayerValueProvider.swift */; };
-		OBJ_64 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* Path.swift */; };
-		OBJ_65 /* PathElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* PathElement.swift */; };
-		OBJ_66 /* QuartzCore+Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* QuartzCore+Animatable.swift */; };
-		OBJ_67 /* ValueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* ValueProvider.swift */; };
-		OBJ_68 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* Animation.swift */; };
-		OBJ_69 /* AnimationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* AnimationContainer.swift */; };
-		OBJ_70 /* LayerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* LayerAnimation.swift */; };
-		OBJ_71 /* RegularContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* RegularContainer.swift */; };
-		OBJ_72 /* Keyframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* Keyframe.swift */; };
-		OBJ_73 /* KeyframeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* KeyframeContainer.swift */; };
-		OBJ_74 /* LayerKeyframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* LayerKeyframe.swift */; };
-		OBJ_75 /* AnimationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* AnimationQueue.swift */; };
-		OBJ_76 /* CALayer+Interception.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* CALayer+Interception.swift */; };
-		OBJ_77 /* Displayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* Displayable.swift */; };
-		OBJ_78 /* ControlPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* ControlPoint.swift */; };
-		OBJ_79 /* CubicBezierCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* CubicBezierCurve.swift */; };
-		OBJ_80 /* CubicBezierSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* CubicBezierSolver.swift */; };
-		OBJ_81 /* KeyframeTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* KeyframeTiming.swift */; };
-		OBJ_82 /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Progress.swift */; };
-		OBJ_83 /* SpringTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* SpringTiming.swift */; };
-		OBJ_84 /* TimingCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* TimingCurve.swift */; };
-		OBJ_85 /* TimingParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* TimingParameters.swift */; };
-		OBJ_86 /* CATransaction+Transactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* CATransaction+Transactor.swift */; };
-		OBJ_88 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* Transaction.swift */; };
-		OBJ_89 /* UIKit+Interoperability.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* UIKit+Interoperability.swift */; };
-		OBJ_90 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_46 /* Utilities.swift */; };
-		OBJ_91 /* Vectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* Vectors.swift */; };
-		OBJ_98 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXFileReference section */
-		"Delight::Delight::Product" /* Delight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Delight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_10 /* Animatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animatable.swift; sourceTree = "<group>"; };
-		OBJ_11 /* CGColor+Animatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+Animatable.swift"; sourceTree = "<group>"; };
-		OBJ_12 /* CGPath+Animatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPath+Animatable.swift"; sourceTree = "<group>"; };
-		OBJ_13 /* KeyPathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathProvider.swift; sourceTree = "<group>"; };
-		OBJ_14 /* LayerValueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerValueProvider.swift; sourceTree = "<group>"; };
-		OBJ_15 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
-		OBJ_16 /* PathElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathElement.swift; sourceTree = "<group>"; };
-		OBJ_17 /* QuartzCore+Animatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuartzCore+Animatable.swift"; sourceTree = "<group>"; };
-		OBJ_18 /* ValueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueProvider.swift; sourceTree = "<group>"; };
-		OBJ_20 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
-		OBJ_21 /* AnimationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationContainer.swift; sourceTree = "<group>"; };
-		OBJ_22 /* LayerAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerAnimation.swift; sourceTree = "<group>"; };
-		OBJ_23 /* RegularContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularContainer.swift; sourceTree = "<group>"; };
-		OBJ_25 /* Keyframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyframe.swift; sourceTree = "<group>"; };
-		OBJ_26 /* KeyframeContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyframeContainer.swift; sourceTree = "<group>"; };
-		OBJ_27 /* LayerKeyframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerKeyframe.swift; sourceTree = "<group>"; };
-		OBJ_29 /* AnimationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationQueue.swift; sourceTree = "<group>"; };
-		OBJ_30 /* CALayer+Interception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Interception.swift"; sourceTree = "<group>"; };
-		OBJ_31 /* Displayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Displayable.swift; sourceTree = "<group>"; };
-		OBJ_33 /* ControlPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPoint.swift; sourceTree = "<group>"; };
-		OBJ_34 /* CubicBezierCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubicBezierCurve.swift; sourceTree = "<group>"; };
-		OBJ_35 /* CubicBezierSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubicBezierSolver.swift; sourceTree = "<group>"; };
-		OBJ_36 /* KeyframeTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyframeTiming.swift; sourceTree = "<group>"; };
-		OBJ_37 /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
-		OBJ_38 /* SpringTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringTiming.swift; sourceTree = "<group>"; };
-		OBJ_39 /* TimingCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimingCurve.swift; sourceTree = "<group>"; };
-		OBJ_40 /* TimingParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimingParameters.swift; sourceTree = "<group>"; };
-		OBJ_42 /* CATransaction+Transactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CATransaction+Transactor.swift"; sourceTree = "<group>"; };
-		OBJ_44 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		OBJ_45 /* UIKit+Interoperability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Interoperability.swift"; sourceTree = "<group>"; };
-		OBJ_46 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		OBJ_47 /* Vectors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vectors.swift; sourceTree = "<group>"; };
-		OBJ_51 /* Example */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Example; sourceTree = SOURCE_ROOT; };
-		OBJ_52 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		OBJ_53 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		OBJ_92 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		OBJ_19 /* Containers */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_20 /* Animation.swift */,
-				OBJ_21 /* AnimationContainer.swift */,
-				OBJ_22 /* LayerAnimation.swift */,
-				OBJ_23 /* RegularContainer.swift */,
-			);
-			path = Containers;
-			sourceTree = "<group>";
-		};
-		OBJ_24 /* Keyframes */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_25 /* Keyframe.swift */,
-				OBJ_26 /* KeyframeContainer.swift */,
-				OBJ_27 /* LayerKeyframe.swift */,
-			);
-			path = Keyframes;
-			sourceTree = "<group>";
-		};
-		OBJ_28 /* Queue */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_29 /* AnimationQueue.swift */,
-				OBJ_30 /* CALayer+Interception.swift */,
-				OBJ_31 /* Displayable.swift */,
-			);
-			path = Queue;
-			sourceTree = "<group>";
-		};
-		OBJ_32 /* Timing */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_33 /* ControlPoint.swift */,
-				OBJ_34 /* CubicBezierCurve.swift */,
-				OBJ_35 /* CubicBezierSolver.swift */,
-				OBJ_36 /* KeyframeTiming.swift */,
-				OBJ_37 /* Progress.swift */,
-				OBJ_38 /* SpringTiming.swift */,
-				OBJ_39 /* TimingCurve.swift */,
-				OBJ_40 /* TimingParameters.swift */,
-			);
-			path = Timing;
-			sourceTree = "<group>";
-		};
-		OBJ_41 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_42 /* CATransaction+Transactor.swift */,
-				OBJ_44 /* Transaction.swift */,
-				OBJ_45 /* UIKit+Interoperability.swift */,
-				OBJ_46 /* Utilities.swift */,
-				OBJ_47 /* Vectors.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		OBJ_48 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Tests;
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_49 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				"Delight::Delight::Product" /* Delight.framework */,
-			);
-			name = Products;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		OBJ_5 /*  */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_6 /* Package.swift */,
-				OBJ_7 /* Sources */,
-				OBJ_48 /* Tests */,
-				OBJ_49 /* Products */,
-				OBJ_51 /* Example */,
-				OBJ_52 /* LICENSE */,
-				OBJ_53 /* README.md */,
-			);
-			name = "";
-			sourceTree = "<group>";
-		};
-		OBJ_7 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_8 /* Delight */,
-			);
-			name = Sources;
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_8 /* Delight */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_9 /* Animatable */,
-				OBJ_19 /* Containers */,
-				OBJ_24 /* Keyframes */,
-				OBJ_28 /* Queue */,
-				OBJ_32 /* Timing */,
-				OBJ_41 /* Utilities */,
-			);
-			name = Delight;
-			path = Sources/Delight;
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_9 /* Animatable */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_10 /* Animatable.swift */,
-				OBJ_11 /* CGColor+Animatable.swift */,
-				OBJ_12 /* CGPath+Animatable.swift */,
-				OBJ_13 /* KeyPathProvider.swift */,
-				OBJ_14 /* LayerValueProvider.swift */,
-				OBJ_15 /* Path.swift */,
-				OBJ_16 /* PathElement.swift */,
-				OBJ_17 /* QuartzCore+Animatable.swift */,
-				OBJ_18 /* ValueProvider.swift */,
-			);
-			path = Animatable;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		"Delight::Delight" /* Delight */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_55 /* Build configuration list for PBXNativeTarget "Delight" */;
-			buildPhases = (
-				OBJ_58 /* Sources */,
-				OBJ_92 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Delight;
-			productName = Delight;
-			productReference = "Delight::Delight::Product" /* Delight.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		"Delight::SwiftPMPackageDescription" /* DelightPackageDescription */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_94 /* Build configuration list for PBXNativeTarget "DelightPackageDescription" */;
-			buildPhases = (
-				OBJ_97 /* Sources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = DelightPackageDescription;
-			productName = DelightPackageDescription;
-			productType = "com.apple.product-type.framework";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		OBJ_1 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastSwiftMigration = 9999;
-				LastUpgradeCheck = 9999;
-			};
-			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "Delight" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = en;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-			);
-			mainGroup = OBJ_5 /*  */;
-			productRefGroup = OBJ_49 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				"Delight::Delight" /* Delight */,
-				"Delight::SwiftPMPackageDescription" /* DelightPackageDescription */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXSourcesBuildPhase section */
-		OBJ_58 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_59 /* Animatable.swift in Sources */,
-				OBJ_60 /* CGColor+Animatable.swift in Sources */,
-				OBJ_61 /* CGPath+Animatable.swift in Sources */,
-				OBJ_62 /* KeyPathProvider.swift in Sources */,
-				OBJ_63 /* LayerValueProvider.swift in Sources */,
-				OBJ_64 /* Path.swift in Sources */,
-				OBJ_65 /* PathElement.swift in Sources */,
-				OBJ_66 /* QuartzCore+Animatable.swift in Sources */,
-				OBJ_67 /* ValueProvider.swift in Sources */,
-				OBJ_68 /* Animation.swift in Sources */,
-				OBJ_69 /* AnimationContainer.swift in Sources */,
-				OBJ_70 /* LayerAnimation.swift in Sources */,
-				OBJ_71 /* RegularContainer.swift in Sources */,
-				OBJ_72 /* Keyframe.swift in Sources */,
-				OBJ_73 /* KeyframeContainer.swift in Sources */,
-				OBJ_74 /* LayerKeyframe.swift in Sources */,
-				OBJ_75 /* AnimationQueue.swift in Sources */,
-				OBJ_76 /* CALayer+Interception.swift in Sources */,
-				OBJ_77 /* Displayable.swift in Sources */,
-				OBJ_78 /* ControlPoint.swift in Sources */,
-				OBJ_79 /* CubicBezierCurve.swift in Sources */,
-				OBJ_80 /* CubicBezierSolver.swift in Sources */,
-				OBJ_81 /* KeyframeTiming.swift in Sources */,
-				OBJ_82 /* Progress.swift in Sources */,
-				OBJ_83 /* SpringTiming.swift in Sources */,
-				OBJ_84 /* TimingCurve.swift in Sources */,
-				OBJ_85 /* TimingParameters.swift in Sources */,
-				OBJ_86 /* CATransaction+Transactor.swift in Sources */,
-				OBJ_88 /* Transaction.swift in Sources */,
-				OBJ_89 /* UIKit+Interoperability.swift in Sources */,
-				OBJ_90 /* Utilities.swift in Sources */,
-				OBJ_91 /* Vectors.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_97 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_98 /* Package.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin XCBuildConfiguration section */
-		OBJ_3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_NS_ASSERTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"SWIFT_PACKAGE=1",
-					"DEBUG=1",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USE_HEADERMAP = NO;
-			};
-			name = Debug;
-		};
-		OBJ_4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"SWIFT_PACKAGE=1",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				USE_HEADERMAP = NO;
-			};
-			name = Release;
-		};
-		OBJ_56 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = Delight.xcodeproj/Delight_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_CFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = Delight;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_VERSION = 5.0;
-				TARGET_NAME = Delight;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
-			};
-			name = Debug;
-		};
-		OBJ_57 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = Delight.xcodeproj/Delight_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_CFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = Delight;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_VERSION = 5.0;
-				TARGET_NAME = Delight;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
-			};
-			name = Release;
-		};
-		OBJ_95 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/XcodeGM.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		OBJ_96 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/XcodeGM.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		OBJ_2 /* Build configuration list for PBXProject "Delight" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_3 /* Debug */,
-				OBJ_4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		OBJ_55 /* Build configuration list for PBXNativeTarget "Delight" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_56 /* Debug */,
-				OBJ_57 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		OBJ_94 /* Build configuration list for PBXNativeTarget "DelightPackageDescription" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_95 /* Debug */,
-				OBJ_96 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = OBJ_1 /* Project object */;
+   archiveVersion = "1";
+   objectVersion = "46";
+   objects = {
+      "Delight::Delight" = {
+         isa = "PBXNativeTarget";
+         buildConfigurationList = "OBJ_57";
+         buildPhases = (
+            "OBJ_60",
+            "OBJ_93"
+         );
+         dependencies = (
+         );
+         name = "Delight";
+         productName = "Delight";
+         productReference = "Delight::Delight::Product";
+         productType = "com.apple.product-type.framework";
+      };
+      "Delight::Delight::Product" = {
+         isa = "PBXFileReference";
+         path = "Delight.framework";
+         sourceTree = "BUILT_PRODUCTS_DIR";
+      };
+      "Delight::SwiftPMPackageDescription" = {
+         isa = "PBXNativeTarget";
+         buildConfigurationList = "OBJ_95";
+         buildPhases = (
+            "OBJ_98"
+         );
+         dependencies = (
+         );
+         name = "DelightPackageDescription";
+         productName = "DelightPackageDescription";
+         productType = "com.apple.product-type.framework";
+      };
+      "OBJ_1" = {
+         isa = "PBXProject";
+         attributes = {
+            LastSwiftMigration = "9999";
+            LastUpgradeCheck = "9999";
+         };
+         buildConfigurationList = "OBJ_2";
+         compatibilityVersion = "Xcode 3.2";
+         developmentRegion = "en";
+         hasScannedForEncodings = "0";
+         knownRegions = (
+            "en"
+         );
+         mainGroup = "OBJ_5";
+         productRefGroup = "OBJ_50";
+         projectDirPath = ".";
+         targets = (
+            "Delight::Delight",
+            "Delight::SwiftPMPackageDescription"
+         );
+      };
+      "OBJ_10" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_11",
+            "OBJ_21",
+            "OBJ_26",
+            "OBJ_30",
+            "OBJ_34",
+            "OBJ_43"
+         );
+         name = "Delight";
+         path = "Sources/Delight";
+         sourceTree = "SOURCE_ROOT";
+      };
+      "OBJ_11" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_12",
+            "OBJ_13",
+            "OBJ_14",
+            "OBJ_15",
+            "OBJ_16",
+            "OBJ_17",
+            "OBJ_18",
+            "OBJ_19",
+            "OBJ_20"
+         );
+         name = "Animatable";
+         path = "Animatable";
+         sourceTree = "<group>";
+      };
+      "OBJ_12" = {
+         isa = "PBXFileReference";
+         path = "Animatable.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_13" = {
+         isa = "PBXFileReference";
+         path = "CGColor+Animatable.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_14" = {
+         isa = "PBXFileReference";
+         path = "CGPath+Animatable.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_15" = {
+         isa = "PBXFileReference";
+         path = "KeyPathProvider.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_16" = {
+         isa = "PBXFileReference";
+         path = "LayerValueProvider.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_17" = {
+         isa = "PBXFileReference";
+         path = "Path.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_18" = {
+         isa = "PBXFileReference";
+         path = "PathElement.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_19" = {
+         isa = "PBXFileReference";
+         path = "QuartzCore+Animatable.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_2" = {
+         isa = "XCConfigurationList";
+         buildConfigurations = (
+            "OBJ_3",
+            "OBJ_4"
+         );
+         defaultConfigurationIsVisible = "0";
+         defaultConfigurationName = "Release";
+      };
+      "OBJ_20" = {
+         isa = "PBXFileReference";
+         path = "ValueProvider.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_21" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_22",
+            "OBJ_23",
+            "OBJ_24",
+            "OBJ_25"
+         );
+         name = "Containers";
+         path = "Containers";
+         sourceTree = "<group>";
+      };
+      "OBJ_22" = {
+         isa = "PBXFileReference";
+         path = "Animation.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_23" = {
+         isa = "PBXFileReference";
+         path = "AnimationContainer.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_24" = {
+         isa = "PBXFileReference";
+         path = "LayerAnimation.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_25" = {
+         isa = "PBXFileReference";
+         path = "RegularContainer.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_26" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_27",
+            "OBJ_28",
+            "OBJ_29"
+         );
+         name = "Keyframes";
+         path = "Keyframes";
+         sourceTree = "<group>";
+      };
+      "OBJ_27" = {
+         isa = "PBXFileReference";
+         path = "Keyframe.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_28" = {
+         isa = "PBXFileReference";
+         path = "KeyframeContainer.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_29" = {
+         isa = "PBXFileReference";
+         path = "LayerKeyframe.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_3" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            CLANG_ENABLE_OBJC_ARC = "YES";
+            COMBINE_HIDPI_IMAGES = "YES";
+            COPY_PHASE_STRIP = "NO";
+            DEBUG_INFORMATION_FORMAT = "dwarf";
+            DYLIB_INSTALL_NAME_BASE = "@rpath";
+            ENABLE_NS_ASSERTIONS = "YES";
+            GCC_OPTIMIZATION_LEVEL = "0";
+            GCC_PREPROCESSOR_DEFINITIONS = (
+               "$(inherited)",
+               "SWIFT_PACKAGE=1",
+               "DEBUG=1"
+            );
+            MACOSX_DEPLOYMENT_TARGET = "10.10";
+            ONLY_ACTIVE_ARCH = "YES";
+            OTHER_SWIFT_FLAGS = (
+               "$(inherited)",
+               "-DXcode"
+            );
+            PRODUCT_NAME = "$(TARGET_NAME)";
+            SDKROOT = "macosx";
+            SUPPORTED_PLATFORMS = (
+               "macosx",
+               "iphoneos",
+               "iphonesimulator",
+               "appletvos",
+               "appletvsimulator",
+               "watchos",
+               "watchsimulator"
+            );
+            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+               "$(inherited)",
+               "SWIFT_PACKAGE",
+               "DEBUG"
+            );
+            SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+            USE_HEADERMAP = "NO";
+         };
+         name = "Debug";
+      };
+      "OBJ_30" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_31",
+            "OBJ_32",
+            "OBJ_33"
+         );
+         name = "Queue";
+         path = "Queue";
+         sourceTree = "<group>";
+      };
+      "OBJ_31" = {
+         isa = "PBXFileReference";
+         path = "AnimationQueue.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_32" = {
+         isa = "PBXFileReference";
+         path = "CALayer+Interception.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_33" = {
+         isa = "PBXFileReference";
+         path = "Displayable.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_34" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_35",
+            "OBJ_36",
+            "OBJ_37",
+            "OBJ_38",
+            "OBJ_39",
+            "OBJ_40",
+            "OBJ_41",
+            "OBJ_42"
+         );
+         name = "Timing";
+         path = "Timing";
+         sourceTree = "<group>";
+      };
+      "OBJ_35" = {
+         isa = "PBXFileReference";
+         path = "ControlPoint.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_36" = {
+         isa = "PBXFileReference";
+         path = "CubicBezierCurve.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_37" = {
+         isa = "PBXFileReference";
+         path = "CubicBezierSolver.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_38" = {
+         isa = "PBXFileReference";
+         path = "KeyframeTiming.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_39" = {
+         isa = "PBXFileReference";
+         path = "Progress.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_4" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            CLANG_ENABLE_OBJC_ARC = "YES";
+            COMBINE_HIDPI_IMAGES = "YES";
+            COPY_PHASE_STRIP = "YES";
+            DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+            DYLIB_INSTALL_NAME_BASE = "@rpath";
+            GCC_OPTIMIZATION_LEVEL = "s";
+            GCC_PREPROCESSOR_DEFINITIONS = (
+               "$(inherited)",
+               "SWIFT_PACKAGE=1"
+            );
+            MACOSX_DEPLOYMENT_TARGET = "10.10";
+            OTHER_SWIFT_FLAGS = (
+               "$(inherited)",
+               "-DXcode"
+            );
+            PRODUCT_NAME = "$(TARGET_NAME)";
+            SDKROOT = "macosx";
+            SUPPORTED_PLATFORMS = (
+               "macosx",
+               "iphoneos",
+               "iphonesimulator",
+               "appletvos",
+               "appletvsimulator",
+               "watchos",
+               "watchsimulator"
+            );
+            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+               "$(inherited)",
+               "SWIFT_PACKAGE"
+            );
+            SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+            USE_HEADERMAP = "NO";
+         };
+         name = "Release";
+      };
+      "OBJ_40" = {
+         isa = "PBXFileReference";
+         path = "SpringTiming.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_41" = {
+         isa = "PBXFileReference";
+         path = "TimingCurve.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_42" = {
+         isa = "PBXFileReference";
+         path = "TimingParameters.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_43" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_44",
+            "OBJ_45",
+            "OBJ_46",
+            "OBJ_47",
+            "OBJ_48"
+         );
+         name = "Utilities";
+         path = "Utilities";
+         sourceTree = "<group>";
+      };
+      "OBJ_44" = {
+         isa = "PBXFileReference";
+         path = "CATransaction+Transactor.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_45" = {
+         isa = "PBXFileReference";
+         path = "Transaction.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_46" = {
+         isa = "PBXFileReference";
+         path = "UIKit+Interoperability.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_47" = {
+         isa = "PBXFileReference";
+         path = "Utilities.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_48" = {
+         isa = "PBXFileReference";
+         path = "Vectors.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_49" = {
+         isa = "PBXGroup";
+         children = (
+         );
+         name = "Tests";
+         path = "";
+         sourceTree = "SOURCE_ROOT";
+      };
+      "OBJ_5" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_6",
+            "OBJ_7",
+            "OBJ_9",
+            "OBJ_49",
+            "OBJ_50",
+            "OBJ_52",
+            "OBJ_53",
+            "OBJ_54",
+            "OBJ_55"
+         );
+         path = "";
+         sourceTree = "<group>";
+      };
+      "OBJ_50" = {
+         isa = "PBXGroup";
+         children = (
+            "Delight::Delight::Product"
+         );
+         name = "Products";
+         path = "";
+         sourceTree = "BUILT_PRODUCTS_DIR";
+      };
+      "OBJ_52" = {
+         isa = "PBXFileReference";
+         path = "Example";
+         sourceTree = "SOURCE_ROOT";
+      };
+      "OBJ_53" = {
+         isa = "PBXFileReference";
+         path = "LICENSE";
+         sourceTree = "<group>";
+      };
+      "OBJ_54" = {
+         isa = "PBXFileReference";
+         path = "README.md";
+         sourceTree = "<group>";
+      };
+      "OBJ_55" = {
+         isa = "PBXFileReference";
+         path = "iOS.xcconfig";
+         sourceTree = "<group>";
+      };
+      "OBJ_57" = {
+         isa = "XCConfigurationList";
+         buildConfigurations = (
+            "OBJ_58",
+            "OBJ_59"
+         );
+         defaultConfigurationIsVisible = "0";
+         defaultConfigurationName = "Release";
+      };
+      "OBJ_58" = {
+         isa = "XCBuildConfiguration";
+         baseConfigurationReference = "OBJ_8";
+         buildSettings = {
+            ENABLE_TESTABILITY = "YES";
+            FRAMEWORK_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            );
+            HEADER_SEARCH_PATHS = (
+               "$(inherited)"
+            );
+            INFOPLIST_FILE = "Delight.xcodeproj/Delight_Info.plist";
+            IPHONEOS_DEPLOYMENT_TARGET = "11.0";
+            LD_RUNPATH_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
+            );
+            MACOSX_DEPLOYMENT_TARGET = "10.10";
+            OTHER_CFLAGS = (
+               "$(inherited)"
+            );
+            OTHER_LDFLAGS = (
+               "$(inherited)"
+            );
+            OTHER_SWIFT_FLAGS = (
+               "$(inherited)"
+            );
+            PRODUCT_BUNDLE_IDENTIFIER = "Delight";
+            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+            SKIP_INSTALL = "YES";
+            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+               "$(inherited)"
+            );
+            SWIFT_VERSION = "5.0";
+            TARGET_NAME = "Delight";
+            TVOS_DEPLOYMENT_TARGET = "9.0";
+            WATCHOS_DEPLOYMENT_TARGET = "2.0";
+         };
+         name = "Debug";
+      };
+      "OBJ_59" = {
+         isa = "XCBuildConfiguration";
+         baseConfigurationReference = "OBJ_8";
+         buildSettings = {
+            ENABLE_TESTABILITY = "YES";
+            FRAMEWORK_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            );
+            HEADER_SEARCH_PATHS = (
+               "$(inherited)"
+            );
+            INFOPLIST_FILE = "Delight.xcodeproj/Delight_Info.plist";
+            IPHONEOS_DEPLOYMENT_TARGET = "11.0";
+            LD_RUNPATH_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
+            );
+            MACOSX_DEPLOYMENT_TARGET = "10.10";
+            OTHER_CFLAGS = (
+               "$(inherited)"
+            );
+            OTHER_LDFLAGS = (
+               "$(inherited)"
+            );
+            OTHER_SWIFT_FLAGS = (
+               "$(inherited)"
+            );
+            PRODUCT_BUNDLE_IDENTIFIER = "Delight";
+            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+            SKIP_INSTALL = "YES";
+            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+               "$(inherited)"
+            );
+            SWIFT_VERSION = "5.0";
+            TARGET_NAME = "Delight";
+            TVOS_DEPLOYMENT_TARGET = "9.0";
+            WATCHOS_DEPLOYMENT_TARGET = "2.0";
+         };
+         name = "Release";
+      };
+      "OBJ_6" = {
+         isa = "PBXFileReference";
+         explicitFileType = "sourcecode.swift";
+         path = "Package.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_60" = {
+         isa = "PBXSourcesBuildPhase";
+         files = (
+            "OBJ_61",
+            "OBJ_62",
+            "OBJ_63",
+            "OBJ_64",
+            "OBJ_65",
+            "OBJ_66",
+            "OBJ_67",
+            "OBJ_68",
+            "OBJ_69",
+            "OBJ_70",
+            "OBJ_71",
+            "OBJ_72",
+            "OBJ_73",
+            "OBJ_74",
+            "OBJ_75",
+            "OBJ_76",
+            "OBJ_77",
+            "OBJ_78",
+            "OBJ_79",
+            "OBJ_80",
+            "OBJ_81",
+            "OBJ_82",
+            "OBJ_83",
+            "OBJ_84",
+            "OBJ_85",
+            "OBJ_86",
+            "OBJ_87",
+            "OBJ_88",
+            "OBJ_89",
+            "OBJ_90",
+            "OBJ_91",
+            "OBJ_92"
+         );
+      };
+      "OBJ_61" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_12";
+      };
+      "OBJ_62" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_13";
+      };
+      "OBJ_63" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_14";
+      };
+      "OBJ_64" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_15";
+      };
+      "OBJ_65" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_16";
+      };
+      "OBJ_66" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_17";
+      };
+      "OBJ_67" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_18";
+      };
+      "OBJ_68" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_19";
+      };
+      "OBJ_69" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_20";
+      };
+      "OBJ_7" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_8"
+         );
+         name = "Configs";
+         path = "";
+         sourceTree = "<group>";
+      };
+      "OBJ_70" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_22";
+      };
+      "OBJ_71" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_23";
+      };
+      "OBJ_72" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_24";
+      };
+      "OBJ_73" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_25";
+      };
+      "OBJ_74" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_27";
+      };
+      "OBJ_75" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_28";
+      };
+      "OBJ_76" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_29";
+      };
+      "OBJ_77" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_31";
+      };
+      "OBJ_78" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_32";
+      };
+      "OBJ_79" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_33";
+      };
+      "OBJ_8" = {
+         isa = "PBXFileReference";
+         path = "iOS.xcconfig";
+         sourceTree = "<group>";
+      };
+      "OBJ_80" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_35";
+      };
+      "OBJ_81" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_36";
+      };
+      "OBJ_82" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_37";
+      };
+      "OBJ_83" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_38";
+      };
+      "OBJ_84" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_39";
+      };
+      "OBJ_85" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_40";
+      };
+      "OBJ_86" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_41";
+      };
+      "OBJ_87" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_42";
+      };
+      "OBJ_88" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_44";
+      };
+      "OBJ_89" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_45";
+      };
+      "OBJ_9" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_10"
+         );
+         name = "Sources";
+         path = "";
+         sourceTree = "SOURCE_ROOT";
+      };
+      "OBJ_90" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_46";
+      };
+      "OBJ_91" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_47";
+      };
+      "OBJ_92" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_48";
+      };
+      "OBJ_93" = {
+         isa = "PBXFrameworksBuildPhase";
+         files = (
+         );
+      };
+      "OBJ_95" = {
+         isa = "XCConfigurationList";
+         buildConfigurations = (
+            "OBJ_96",
+            "OBJ_97"
+         );
+         defaultConfigurationIsVisible = "0";
+         defaultConfigurationName = "Release";
+      };
+      "OBJ_96" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            LD = "/usr/bin/true";
+            OTHER_SWIFT_FLAGS = (
+               "-swift-version",
+               "5",
+               "-I",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
+               "-target",
+               "x86_64-apple-macosx10.10",
+               "-sdk",
+               "/Applications/XcodeGM.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
+               "-package-description-version",
+               "5"
+            );
+            SWIFT_VERSION = "5.0";
+         };
+         name = "Debug";
+      };
+      "OBJ_97" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            LD = "/usr/bin/true";
+            OTHER_SWIFT_FLAGS = (
+               "-swift-version",
+               "5",
+               "-I",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
+               "-target",
+               "x86_64-apple-macosx10.10",
+               "-sdk",
+               "/Applications/XcodeGM.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
+               "-package-description-version",
+               "5"
+            );
+            SWIFT_VERSION = "5.0";
+         };
+         name = "Release";
+      };
+      "OBJ_98" = {
+         isa = "PBXSourcesBuildPhase";
+         files = (
+            "OBJ_99"
+         );
+      };
+      "OBJ_99" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_6";
+      };
+   };
+   rootObject = "OBJ_1";
 }
