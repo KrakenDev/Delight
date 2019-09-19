@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol TimingProgress: CustomStringConvertible {
-    associatedtype Timing: BinaryFloatingPoint where Timing.Stride == Timing
+    associatedtype Timing: BinaryFloatingPoint
 
     var relativeTime: Timing { get }
     var relativeValue: Timing { get }
@@ -24,25 +24,29 @@ extension TimingProgress {
 }
 
 public protocol TimingParameters: Equatable {
-    associatedtype Progression: TimingProgress
-    func progress(at time: Progression.Timing) -> Progression
+    associatedtype Progression: BinaryFloatingPoint
+    func progress(at time: Progression) -> Progress<Progression>
 }
 
 extension TimingParameters {
-    public func delay(forRelativeValue relativeValue: Progression.Timing, withDuration duration: Progression.Timing) -> Progression.Timing {
+    public func delay(forRelativeValue relativeValue: Progression, withDuration duration: Progression) -> Progression {
         guard let progression = progressions(from: duration).first(where: {
-            relativeValue <= Progression.Timing($0.relativeValue)
+            relativeValue <= Progression($0.relativeValue)
         }) else { return 1.0 }
 
-        return Progression.Timing(progression.relativeTime)
+        return progression.relativeTime
     }
 
-    public func progressions(from duration: Progression.Timing) -> [Progression] {
+    public func progressions(from duration: Progression) -> [Progress<Progression>] {
         guard duration > 0.0 else { return [.start(), .end()] }
 
-        let maxFrames = Progression.Timing(View.maxFPS) * duration
-        let timeStep = 1.0 / floor(maxFrames)
+        let maxFrames = Progression(View.maxFPS) * duration
+        let timeStep = Double(1.0 / floor(maxFrames))
 
-        return stride(from: 0.0, to: 1.0, by: timeStep).map(progress) + [.end()]
+        return stride(from: 0.0, to: 1.0, by: timeStep)
+            .map {
+                return progress(at: Progression($0))
+            }
+            + [.end()]
     }
 }

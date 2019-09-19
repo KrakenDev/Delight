@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Progress<T: BinaryFloatingPoint>: TimingProgress where T.Stride == T {
+public struct Progress<T: BinaryFloatingPoint>: TimingProgress {
     public let relativeTime: T
     public let relativeValue: T
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class KeyframeTiming<T: BinaryFloatingPoint>: TimingParameters, Overlappable where T.Stride == T {
+public class KeyframeTiming<T: BinaryFloatingPoint>: TimingParameters, Overlappable {
     public var curve: TimingCurve
     public var relativeStartTime: T
     public var relativeDuration: T

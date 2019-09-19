@@ -10,7 +10,7 @@ public protocol KeyPathProvider: Animatable {
     static var keyPaths: [WritableKeyPath<Self, PathValue>] { get }
 }
 
-extension KeyPathProvider where Self == Value, PathValue == Progression {
+extension KeyPathProvider where Self == Value, PathValue == Progression, PathValue.Progression == Progression {
     public func lerp(to value: Self, with progress: Progression) -> Self {
         var newValue = self
         Self.keyPaths.forEach { keyPath in

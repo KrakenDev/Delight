@@ -8,7 +8,7 @@
 
 public protocol Animatable {
     associatedtype Value: Animatable where Value.Progression == Progression, Self == Value
-    associatedtype Progression: BinaryFloatingPoint & Animatable where Progression.Stride == Progression
+    associatedtype Progression: BinaryFloatingPoint & Animatable
 
     func lerp(to value: Value, with progression: Progression) -> Value
 }
