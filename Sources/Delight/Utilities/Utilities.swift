@@ -7,7 +7,6 @@
 
 import Complex
 import Foundation
-import ObjectiveC
 import UIKit
 
 func execute(block: VoidBlock) { block() }
@@ -82,8 +81,8 @@ extension CAShapeLayer: Segmentable {
             
             let curve = segment.bezierCurve
             let mutableBezierPath = UIBezierPath()
-            mutableBezierPath.move(to: curve.c0.cgPoint)
-            mutableBezierPath.addCurve(to: curve.c3.cgPoint, controlPoint1: curve.c1.cgPoint, controlPoint2: curve.c2.cgPoint)
+            mutableBezierPath.move(to: curve.c0.cg)
+            mutableBezierPath.addCurve(to: curve.c3.cg, controlPoint1: curve.c1.cg, controlPoint2: curve.c2.cg)
             
             debugCurveLayer.path = mutableBezierPath.cgPath
             layers.append(removingPossibleDuplicate: debugCurveLayer)
@@ -121,118 +120,28 @@ extension Array where Element: Equatable {
     }
 }
 
-extension NSNumber: Comparable {
-    public static func < (lhs: NSNumber, rhs: NSNumber) -> Bool {
-        return lhs.compare(rhs) == .orderedAscending
-    }
-
-    public static func + (lhs: NSNumber, rhs: NSNumber) -> NSNumber {
-        return NSNumber(value: lhs.doubleValue + rhs.doubleValue)
-    }
-
-    public static func - (lhs: NSNumber, rhs: NSNumber) -> NSNumber {
-        return NSNumber(value: lhs.doubleValue - rhs.doubleValue)
-    }
-
-    public static func * (lhs: NSNumber, rhs: NSNumber) -> NSNumber {
-        return NSNumber(value: lhs.doubleValue * rhs.doubleValue)
-    }
-
-    public static func / (lhs: NSNumber, rhs: NSNumber) -> NSNumber {
-        return NSNumber(value: lhs.doubleValue / rhs.doubleValue)
-    }
-
-    public static func ..< (lhs: NSNumber, rhs: NSNumber) -> Range<Double> {
-        return lhs.doubleValue..<rhs.doubleValue
-    }
-}
-
 extension BinaryFloatingPoint {
     var isUniform: Bool {
-        return .zero <= self && self <= 1.0
+        (0.0...1.0).contains(self)
     }
 
-    public var degrees: Self { return self * 180.0 / .pi }
-    public var radians: Self { return self * .pi / 180.0 }
+    var degrees: Self { self * 180.0 / .pi }
+    var radians: Self { self * .pi / 180.0 }
+
+    var removedSlop: Self {
+        guard !isZero else { return .zero }
+        return (self * 1000).rounded() / 1000
+    }
+
 
     func trim(digitsPastDecimal places: Int) -> Self {
-        return Darwin.round(self * 10.0 * Self(places)) / (10.0 * Self(places))
-    }
-    
-    var halved: Self {
-        return self / 2.0
-    }
-    
-    var doubled: Self {
-        return self * 2.0
-    }
-    
-    var cubeRoot: Self {
-        return Self(cbrt(Double(self)))
-    }
-    
-    var squareRoot: Self {
-        return Self(sqrt(Double(self)))
-    }
-    
-    var cubed: Self {
-        return self ^ 3.0
-    }
-    
-    var squared: Self {
-        return self ^ 2.0
-    }
-    
-    var cg: Double {
-        return Double(self)
-    }
-    
-    func clamped(to range: ClosedRange<Double>) -> Self {
-        return Self(min(max(range.lowerBound, Double(self)), range.upperBound))
-    }
-    
-    static var I: Double {
-        return .zero
-    }
-    
-    static func ^(lhs: Self, rhs: Int) -> Self {
-        return lhs^Double(rhs)
-    }
-    static func ^(lhs: Self, rhs: Double) -> Self {
-        return Self(pow(Double(lhs), rhs))
-    }
-}
-
-extension Double {
-    var rootOfUnity: Complex<Double> {
-        let a = (1.0).i * 3.0.squareRoot
-        return (self > .zero) ? (Complex(-1.0)
-            + a * Complex(-1.0^self)
-        ).halved : Complex(1.0)
-    }
-}
-
-extension Complex where R == Double {
-    var halved: Self {
-        return self / Complex(2.0)
-    }
-}
-
-class Weak<T: AnyObject>: Hashable where T: Hashable {
-    weak var value: T?
-
-    init(_ value: T) {
-        self.value = value
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(value?.hashValue)
+        Darwin.round(self * 10.0 * Self(places)) / (10.0 * Self(places))
     }
 
-    static func == (lhs: Weak<T>, rhs: Weak<T>) -> Bool {
-        guard let lhsValue = lhs.value, let rhsValue = rhs.value else {
-            return false
-        }
-        return lhsValue == rhsValue
+    func clamped(to range: ClosedRange<Self>) -> Self {
+        range.contains(self) ? self : min(
+            max(range.lowerBound, self),
+            range.upperBound
+        )
     }
 }

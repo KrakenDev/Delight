@@ -10,15 +10,15 @@ import UIKit
 typealias TimingFunctionPoint = [Float]
 
 public struct ControlPoint {
-    public var x: Double
-    public var y: Double
+    public var x: Double = .zero
+    public var y: Double = .zero
 
     public static let zero = ControlPoint(x: 0.0, y: 0.0)
     public static let unit = ControlPoint(x: 1.0, y: 1.0)
 
     public init() {
-        self.x = 0.0
-        self.y = 0.0
+        self.x = .zero
+        self.y = .zero
     }
 
     public init(x: Double, y: Double) {
