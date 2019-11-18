@@ -11,9 +11,13 @@ import ObjectiveC
 import QuartzCore
 
 class LayerKeyframe<T: Animatable>: Keyframe {
-    let timing: KeyframeTiming<T.Progression>
-    let valueProvider: LayerValueProvider<T>
     let hashValue: Int
+    let timing: KeyframeTiming
+    let valueProvider: LayerValueProvider<T>
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(hashValue)
+    }
 
     lazy var animation: LayerAnimation<T> = .init(from: self)
 
@@ -24,9 +28,9 @@ class LayerKeyframe<T: Animatable>: Keyframe {
         self.valueProvider = valueProvider
         self.timing = KeyframeTiming(
             curve: parentContainer?.timing.curve ?? .systemDefault,
-            relativeStartTime: T.Progression(parentTiming?.relativeStartTime ?? 0.0),
-            relativeDuration: T.Progression(parentTiming?.relativeDuration ?? 0.0),
-            totalDuration: T.Progression(parentTiming?.totalDuration ?? 0.0)
+            relativeStartTime: parentTiming?.relativeStartTime ?? 0.0,
+            relativeDuration: parentTiming?.relativeDuration ?? 0.0,
+            totalDuration: parentTiming?.totalDuration ?? 0.0
         )
         self.hashValue = hashValue
     }

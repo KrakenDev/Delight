@@ -14,7 +14,7 @@ import Foundation
  * +[UIView animateKeyframesWithDelay:duration:options:animations:completion:]
  */
 class RegularContainer: AnimationContainer {
-    let timing: KeyframeTiming<Double>
+    let timing: KeyframeTiming
     var isExecuting: Bool {
         return animationBlock != nil
     }

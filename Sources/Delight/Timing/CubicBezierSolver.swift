@@ -33,7 +33,7 @@ extension Complex {
 
 extension ControlPoint {
     func translatedBy(dx: Double, dy: Double = 0.0) -> ControlPoint {
-        return ControlPoint(x: x + dx.cg, y: y + dy.cg)
+        return ControlPoint(x: x + dx, y: y + dy)
     }
     // In degrees
     func rotatedAroundOrigin(by angle: Double = 90.0) -> ControlPoint {

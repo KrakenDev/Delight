@@ -11,7 +11,7 @@ public protocol Keyframe: class, Hashable, Comparable {
     associatedtype AnimationInstance: Animation
     associatedtype KeyframeValueProvider: ValueProvider where KeyframeValueProvider.Value == AnimationInstance.Value
 
-    var timing: KeyframeTiming<AnimationInstance.Value.Progression> { get }
+    var timing: KeyframeTiming { get }
     var valueProvider: KeyframeValueProvider { get }
     var animation: AnimationInstance { get }
 }

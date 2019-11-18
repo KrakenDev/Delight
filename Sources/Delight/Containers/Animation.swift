@@ -5,6 +5,8 @@
 //  Created by Hector Matos on 9/28/18.
 //
 
+import Foundation
+
 public typealias VoidBlock = () -> Void
 public typealias AnimationBlock = VoidBlock
 public typealias AnimationCompletion = (Bool) -> Void
@@ -28,16 +30,16 @@ public class AnyAnimation<T: Animatable> {
     private let getValues: () -> [Any]
     private let setValues: ([Any]) -> Void
 
-    public init<T: Animation>(_ animation: T) where T.Value.Progression == Double {
-        getDuration = { animation.duration }
-        setDuration = { animation.duration = $0 }
+    public init<U: Animation>(_ animation:U) where U.Value == T {
+        getDuration = { Double(animation.duration) }
+        setDuration = { animation.duration = T.Progression($0) }
 
-        getKeyTimes = { animation.keyTimes }
-        setKeyTimes = { animation.keyTimes = $0 }
+        getKeyTimes = { animation.keyTimes.map(Double.init) }
+        setKeyTimes = { animation.keyTimes = $0.map(T.Progression.init) }
 
         getValues = { animation.values }
         setValues = {
-            guard let values = $0 as? [T.Value] else { return }
+            guard let values = $0 as? [T] else { return }
             animation.values = values
         }
     }

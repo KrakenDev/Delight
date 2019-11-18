@@ -72,7 +72,7 @@ public struct PathElement {
 }
 
 extension PathElement: Animatable {
-    public func lerp(to newValue: PathElement, with progress: CGFloat) -> PathElement {
+    public func lerp(to newValue: PathElement, with progress: Double) -> PathElement {
         guard progress != 1.0 else { return newValue }
 
         var operation = max(self.operation, newValue.operation)

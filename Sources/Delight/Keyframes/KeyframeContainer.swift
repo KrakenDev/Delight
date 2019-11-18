@@ -10,7 +10,7 @@ import CoreGraphics
 import QuartzCore
 
 class KeyframeContainer: AnimationContainer {
-    let timing: KeyframeTiming<Double>
+    let timing: KeyframeTiming
     var isExecuting: Bool { return animationBlock != nil }
 
     private var parentContainer: AnimationContainer?

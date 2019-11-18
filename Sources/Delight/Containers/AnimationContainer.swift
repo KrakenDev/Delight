@@ -10,8 +10,8 @@
  * inherently keyframe data sources (they are aware of timings and such), this protocol inherits
  * from KeyframeDataSource.
  */
-public protocol AnimationContainer: class {
-    var timing: KeyframeTiming<Double> { get }
+public protocol AnimationContainer {
+    var timing: KeyframeTiming { get }
     var isExecuting: Bool { get }
 
     /**

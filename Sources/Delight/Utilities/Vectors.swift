@@ -1,5 +1,4 @@
-import Foundation
-import CoreGraphics
+import UIKit
 
 public enum Axis {
     case x
@@ -56,21 +55,23 @@ extension Vector {
 }
 
 extension ControlPoint: Vector {
-    public var cgPoint: CGPoint { return CGPoint(x: CGFloat(x), y: CGFloat(y)) }
+    public var cgPoint: CGPoint { return CGPoint(x: Double(x), y: Double(y)) }
 }
 
 extension CGPoint: Vector {
-    public var controlPoint: ControlPoint { return ControlPoint(x: x, y: y) }
+    public var controlPoint: ControlPoint {
+        return ControlPoint(x: Double(x), y: Double(y))
+    }
 
     public static func +(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
         return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
 
-    public static func +(lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+    public static func +(lhs: CGPoint, rhs: Double) -> CGPoint {
         return lhs + CGPoint(x: rhs, y: rhs)
     }
 
-    public static func +(lhs: CGFloat, rhs: CGPoint) -> CGPoint {
+    public static func +(lhs: Double, rhs: CGPoint) -> CGPoint {
         return rhs + lhs
     }
 
@@ -78,11 +79,11 @@ extension CGPoint: Vector {
         return lhs + -rhs
     }
 
-    public static func -(lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+    public static func -(lhs: CGPoint, rhs: Double) -> CGPoint {
         return lhs + -rhs
     }
 
-    public static func -(lhs: CGFloat, rhs: CGPoint) -> CGPoint {
+    public static func -(lhs: Double, rhs: CGPoint) -> CGPoint {
         return lhs + -rhs
     }
 
@@ -90,11 +91,11 @@ extension CGPoint: Vector {
         return CGPoint(x: lhs.x * rhs.x, y: lhs.y * rhs.y)
     }
 
-    public static func *(lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+    public static func *(lhs: CGPoint, rhs: Double) -> CGPoint {
         return lhs * CGPoint(x: rhs, y: rhs)
     }
 
-    public static func *(lhs: CGFloat, rhs: CGPoint) -> CGPoint {
+    public static func *(lhs: Double, rhs: CGPoint) -> CGPoint {
         return rhs * lhs
     }
 
@@ -102,12 +103,12 @@ extension CGPoint: Vector {
         return CGPoint(x: lhs.x / rhs.x, y: lhs.y / rhs.y)
     }
 
-    public static func /(lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+    public static func /(lhs: CGPoint, rhs: Double) -> CGPoint {
         return lhs / CGPoint(x: rhs, y: rhs)
     }
 
-    public static func /(lhs: CGFloat, rhs: CGPoint) -> CGPoint {
-        return CGPoint(x: lhs / rhs.x, y: lhs / rhs.y)
+    public static func /(lhs: Double, rhs: CGPoint) -> CGPoint {
+        return CGPoint(x: lhs / Double(rhs.x), y: lhs / Double(rhs.y))
     }
 
     public static func +=(lhs: inout CGPoint, rhs: CGPoint) {
@@ -124,8 +125,8 @@ public func pow<T: BinaryFloatingPoint>(_ value: T, _ power: T) -> T {
         return pow(value as! Double, power as! Double) as! T
     } else if value is Float {
         return pow(value as! Float, power as! Float) as! T
-    } else if value is CGFloat {
-        return pow(value as! CGFloat, power as! CGFloat) as! T
+    } else if value is Double {
+        return pow(value as! Double, power as! Double) as! T
     } else {
         return value
     }

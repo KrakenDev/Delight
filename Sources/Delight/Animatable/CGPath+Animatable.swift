@@ -8,6 +8,9 @@
 import Foundation
 import CoreGraphics
 
+func element<T>(_ value: T) -> T {
+    return value
+}
 
 // MARK: CGPath Interpolation (This one's a doozy)
 
@@ -56,6 +59,8 @@ extension CGPath: Animatable {
                 origin: previous.destination,
                 destination: path.subpaths.last?.first?.destination ?? .zero
             )
+        @unknown default:
+            pathSegment = .init()
         }
 
         var lastSubpath = path.subpaths.popLast() ?? []
@@ -100,7 +105,7 @@ extension CGPath: Animatable {
     /**
      Now back to our regularly scheduled Hector programming.
      */
-    public func lerp(to value: CGPath, with progress: CGFloat) -> CGPath {
+    public func lerp(to value: CGPath, with progress: Double) -> CGPath {
         let fromPath = path
         let toPath = value.path
 
@@ -122,8 +127,9 @@ extension CGPath: Animatable {
             reorder(segments: &toSegments, whereFirstElementIsMostSimilarTo: toPath.highestCenteredElement)
         }
         
-        zip(fromSegments, toSegments).forEach {
-            $0.lerp(to: $1, with: progress).add(to: newPath)
+        zip(fromSegments, toSegments)
+            .map(element).forEach { z in
+                z.0.lerp(to: z.1, with: progress).add(to: newPath)
         }
 
         return newPath

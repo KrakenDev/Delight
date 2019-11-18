@@ -5,7 +5,8 @@
 //  Created by Hector Matos on 9/14/18.
 //
 
-import CoreGraphics
+import Complex
+import Foundation
 import ObjectiveC
 import UIKit
 
@@ -121,8 +122,6 @@ extension Array where Element: Equatable {
 }
 
 extension NSNumber: Comparable {
-    public var CGFloatValue: CGFloat { return CGFloat(doubleValue) }
-
     public static func < (lhs: NSNumber, rhs: NSNumber) -> Bool {
         return lhs.compare(rhs) == .orderedAscending
     }
@@ -150,7 +149,7 @@ extension NSNumber: Comparable {
 
 extension BinaryFloatingPoint {
     var isUniform: Bool {
-        return 0.0 <= self && self <= 1.0
+        return .zero <= self && self <= 1.0
     }
 
     public var degrees: Self { return self * 180.0 / .pi }
@@ -159,16 +158,75 @@ extension BinaryFloatingPoint {
     func trim(digitsPastDecimal places: Int) -> Self {
         return Darwin.round(self * 10.0 * Self(places)) / (10.0 * Self(places))
     }
+    
+    var halved: Self {
+        return self / 2.0
+    }
+    
+    var doubled: Self {
+        return self * 2.0
+    }
+    
+    var cubeRoot: Self {
+        return Self(cbrt(Double(self)))
+    }
+    
+    var squareRoot: Self {
+        return Self(sqrt(Double(self)))
+    }
+    
+    var cubed: Self {
+        return self ^ 3.0
+    }
+    
+    var squared: Self {
+        return self ^ 2.0
+    }
+    
+    var cg: Double {
+        return Double(self)
+    }
+    
+    func clamped(to range: ClosedRange<Double>) -> Self {
+        return Self(min(max(range.lowerBound, Double(self)), range.upperBound))
+    }
+    
+    static var I: Double {
+        return .zero
+    }
+    
+    static func ^(lhs: Self, rhs: Int) -> Self {
+        return lhs^Double(rhs)
+    }
+    static func ^(lhs: Self, rhs: Double) -> Self {
+        return Self(pow(Double(lhs), rhs))
+    }
+}
+
+extension Double {
+    var rootOfUnity: Complex<Double> {
+        let a = (1.0).i * 3.0.squareRoot
+        return (self > .zero) ? (Complex(-1.0)
+            + a * Complex(-1.0^self)
+        ).halved : Complex(1.0)
+    }
+}
+
+extension Complex where R == Double {
+    var halved: Self {
+        return self / Complex(2.0)
+    }
 }
 
 class Weak<T: AnyObject>: Hashable where T: Hashable {
     weak var value: T?
-    var hashValue: Int {
-        return value?.hashValue ?? 0
-    }
 
     init(_ value: T) {
         self.value = value
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(value?.hashValue)
     }
 
     static func == (lhs: Weak<T>, rhs: Weak<T>) -> Bool {
