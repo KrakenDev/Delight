@@ -13,11 +13,11 @@ extension Int {
 extension FloatingPoint where Self: Real {
     var complex: Complex<Self> { .init(self) }
 
-    static func ^(lhs: Self, rhs: Self) -> Double {
-        pow(Double(lhs), Double(rhs))
+    static func ^(lhs: Self, rhs: Self) -> Self {
+        pow(lhs, rhs)
     }
-    static func ^(lhs: Self, rhs: Int) -> Double {
-        pow(Double(lhs), Double(rhs))
+    static func ^(lhs: Self, rhs: Int) -> Self {
+        pow(lhs, Self(rhs))
     }
 
     static prefix func √(rhs: Self) -> Complex<Self> {
