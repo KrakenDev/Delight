@@ -1,10 +1,3 @@
-//
-//  LayerAnimation.swift
-//  Delight
-//
-//  Created by Hector Matos on 10/3/18.
-//
-
 class LayerAnimation<T: Animatable>: Animation {
     var values: [T]
     var keyTimes: [T.Progression]

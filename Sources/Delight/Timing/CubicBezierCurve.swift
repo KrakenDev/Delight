@@ -1,11 +1,5 @@
-//
-//  CubicBezierCurve.swift
-//  Delight-iOS
-//
-//  Created by Hector Matos on 9/13/18.
-//
-
-import UIKit
+import CoreGraphics
+import QuartzCore
 
 public struct CubicBezierCurve {
     public var c0: ControlPoint
@@ -75,34 +69,5 @@ public struct CubicBezierCurve {
 extension CubicBezierCurve: TimingParameters {
     public static func ==(lhs: CubicBezierCurve, rhs: CubicBezierCurve) -> Bool {
         return lhs.controlPoints == rhs.controlPoints
-    }
-}
-
-extension CubicBezierCurve: Segmentable {
-    public func segmented(by amount: Int) -> [CubicBezierCurve] {
-        var segments: [CubicBezierCurve] = []
-
-        var curve = self
-
-        for segment in (1...amount).reversed() {
-            let t = 1.0 / Double(segment)
-
-            let d0 = curve.c0.lerp(to: curve.c1, with: t)
-            let d1 = curve.c1.lerp(to: curve.c2, with: t)
-            let d2 = curve.c2.lerp(to: curve.c3, with: t)
-
-            let e0 = d0.lerp(to: d1, with: t)
-            let e1 = d1.lerp(to: d2, with: t)
-
-            let f0 = e0.lerp(to: e1, with: t)
-
-            let leftHalf = [curve.c0, d0, e0, f0]
-            let rightHalf = [f0, e1, d2, curve.c3]
-
-            segments.append(CubicBezierCurve(points: leftHalf))
-            curve = CubicBezierCurve(points: rightHalf)
-        }
-
-        return segments
     }
 }

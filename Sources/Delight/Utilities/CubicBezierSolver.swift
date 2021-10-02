@@ -1,17 +1,10 @@
-//
-//  CubicBezierSolver.swift
-//  Delight
-//
-//  Created by Hector Matos on 9/18/19.
-//
-
-import Complex
 import Foundation
+import Numerics
 
 extension CubicBezierCurve {
     enum Axis {
-        case vertical
-        case horizontal
+        case value
+        case time
     }
     struct Coefficients {
         let a: Double
@@ -39,6 +32,17 @@ extension ControlPoint {
         )
     }
 }
+
+/// Formula for the cube roots of unity was taken from
+/// https://en.wikipedia.org/wiki/Root_of_unity#Explicit_expressions_in_low_degrees
+///
+/// unity = (-1 ± i√3) / 2
+private let i = Complex<Double>.i
+private let unity = (
+    x1: 1.complex,
+    x2: ((-1).complex + √(3) * i) / 2.complex,
+    x3: ((-1).complex - √(3) * i) / 2.complex
+)
 
 
 // MARK: - Bezier Solvers
@@ -89,20 +93,201 @@ extension ControlPoint {
 /******************************THE Cubic Bezier Solver******************************/
 extension CubicBezierCurve {
     /**
+     We can generate our coefficients by expanding our formulas and simplifying
+     them in terms of t. BTW, coefficients are the thingies you multiply tⁿ by.
+
+     In the primer above, we're able to prove that u=(1-t) so the first step is to replace
+     all 'u's with '1-t'.
+
+     Let's see what that looks like:
+     -> f(t) = au³ + 3btu² + 3ct²u + dt³
+     -> f(t) = a(1-t)³ + 3bt(1-t)² + 3ct²(1-t) + dt³
+     -> f(t) = a(1-2t+t²)(1-t) + 3bt(1-2t+t²) + (3ct²-3ct³) + dt³
+     -> f(t) = a(1-3t+3t²-t³) + (3bt-6bt²+3bt³) + (3ct²-3ct³) + dt³
+     -> f(t) = (a-3at+3at²-at³) + (3bt-6bt²+3bt³) + (3ct²-3ct³) + dt³
+     -> f(t) = a + -3at + 3at² + -at³ + 3bt + -6bt² + 3bt³ + 3ct² + -3ct³ + dt³
+     -> f(t) = (dt³ - 3ct³ + 3bt³ - at³) + (3ct² - 6bt² + 3at²) + (3bt - 3at) + a
+     -> f(t) = t³(d - 3c + 3b - a) + t²(3c - 6b + 3a) + t(3b - 3a) + a
+
+     Everything in parentheses from the last line above are the extracted coefficients from
+     our original formula! By doing this, we've converted our cubic bezier formula to
+     something a lot easier to use:
+
+     at³ + bt² + ct + d
+     */
+    func coefficients(for axis: Axis) -> Coefficients {
+        let a = (axis == .time) ?
+            self.c0.x : self.c0.y
+        let b = (axis == .time) ?
+            self.c1.x : self.c1.y
+        let c = (axis == .time) ?
+            self.c2.x : self.c2.y
+        let d = (axis == .time) ?
+            self.c3.x : self.c3.y
+
+        return Coefficients(
+            a: d - 3*c + 3*b - a,
+            b: 3*c - 6*b + 3*a,
+            c: 3*b - 3*a,
+            d: a
+        )
+    }
+
+    /**
+     We already know the representation of a bezier curve is au³ + 3btu² + 3ct²u + dt³.
+     Since we converted that to at³ + bt² + ct + d through our `coefficients(from:)`
+     function, that means all we have left is to plug in our t in order to get our
+     exact point on the curve at that time.
+     */
+    func pointOnCurve(forTime t: Double) -> Progress {
+        let x = coefficients(for: .time)
+        let y = coefficients(for: .value)
+
+        return Progress(
+            relativeTime: x.a*t^^3 + x.b*t^^2 + x.c*t + x.d,
+            relativeValue: y.a*t^^3 + y.b*t^^2 + y.c*t + y.d
+        )
+    }
+
+    /**
      The formula for a cubic function's roots is below. The code you find
      has been translated from Cardano's solution to the cubic equation that
      I found here: https://trans4mind.com/personal_development/mathematics/polynomials/cubicAlgebra.htm#7_u3
      */
     var root: Double {
         /**
-         To begin solving for 0 in a cubic equation, we need divide our coefficients by a.
-         This gives us less coefficients to work with without changing the value of the roots.
+         In the link above, the author starts with x³ + ax² + bx + c. However, our coefficients and cubic formula
+         are derived from the equation ax³ + bx² + cx + d
+
+         Determining the root of a polynomial means we have to equate our formula to 0. This means we can easily transform our cubic
+         formula into the equation the author starts with by dividing by a:
+
+         -> 0 = ax³ + bx² + cx + d
+         -> 0/a = (ax³ + bx² + cx + d) / a
+         -> 0 = (ax³ + bx² + cx + d)(1/a)
+         -> 0 = (1/a)ax³ + (1/a)bx² + (1/a)cx + (1/a)d
+         -> 0 = x³ + (b/a)x² + (c/a)x + (d/a)
+         -> 0 = x³ + ax² + bx + c
          */
-        let coeffs = coefficients(for: .vertical)
+        let coeffs = coefficients(for: .value)
 
         let a: Double = coeffs.b / coeffs.a
         let b: Double = coeffs.c / coeffs.a
         let c: Double = coeffs.d / coeffs.a
+
+        /**
+         Now that we have values for each coefficient in the equation of the form x³ + ax² + bx + c, the math checks out to reduce
+         the formula even more: https://trans4mind.com/personal_development/mathematics/polynomials/cubicAlgebra.htm#mozTocId231308
+
+         In that link's section, we find that we can further represent this equation with a simpler form called the "reduced cubic"
+         where we substitute x for (t-a/3). In doing so, the algebra works out to this reduced cubic:
+         0 = t³ + pt + q
+
+         Where:
+         p = (3b - a²) / 3
+         q = (2a³ - 9ab + 27c) / 27
+         */
+
+        let p = (3*b - a^^2) / 3
+        let q = (2*a^^3 - 9*a*b + 27*c) / 27
+
+        // When reducing the cubic formula and solving for roots, this coefficient is used often.
+        let coefficient: Complex<Double> = Complex(a/3)
+
+        /**
+         After getting concrete values for p and q, there are some easy outs we can take to immediately extract the root of the formula but only if
+         p or q is 0: https://trans4mind.com/personal_development/mathematics/polynomials/cubicAlgebra.htm#1.%20Immediately%20Solvable
+         */
+        if p.isZero && q.isZero {
+            return .zero
+        }
+
+        /**
+         If _p is zero_, then according to the previous link our formula simplifies more:
+         -> 0 = t³ + pt + q
+         -> 0 = t³ + (0)t + q
+         -> 0 = t³ + q
+         -> -t³ = q
+         -> t³ = -q
+         -> t = ∛-q
+
+         Given that we know x (our root) = `t-a/3`, we can introduce x back to this equation:
+         -> t = ∛-q
+         -> t - a/3 = (∛-q) - a/3
+         -> x = (∛-q) - a/3
+
+         To get all three roots of a cube root, we multiply the output of ∛x by the three cube roots of unity. This turns
+         our three possible roots into:
+         -> x = unity1(∛-q) - a/3
+         -> x = unity2(∛-q) - a/3
+         -> x = unity3(∛-q) - a/3
+         */
+        if p.isZero {
+            let t = ∛(-q)
+            let x1 = t * unity.x1 - coefficient
+            let x2 = t * unity.x2 - coefficient
+            let x3 = t * unity.x3 - coefficient
+
+            if x1.isFinite {
+                return x1.real
+            }
+            if x2.isFinite {
+                return x2.real
+            }
+            if x3.isFinite {
+                return x3.real
+            }
+        }
+
+        /**
+         If _q is zero_, then our formula simplifies more:
+         -> 0 = t³ + pt + q
+         -> 0 = t³ + pt + (0)
+         -> 0 = t³ + pt
+
+         For the above formula to work, then t has to equal zero:
+         -> 0 = (0)³ + p(0)
+
+         Since t = x + a/3 (derived from x=t-a/3) and we know that t must equal zero, we get our first root:
+         -> 0 = x + a/3
+         -> x = -a/3
+
+         But this is only one of three roots! The other two can be taken by solving for `0 = t³ + pt`
+         -> 0 = t³ + pt
+         -> 0/t = (t³ + pt)/t
+         -> 0 = t² + p
+         -> -p = t²
+         -> √-p = t
+
+         Substitute `x + a/3` for t again:
+         -> √-p = t
+         -> √-p = x + a/3
+         -> x = √-p - a/3
+
+         Multiply `√-p` (AKA 't') by both roots of one (-1 & 1) and you get:
+         -> x = ±√-p - a/3
+
+         That leaves us with our three roots when `q` is zero:
+         -> x = -a/3
+         -> x = √-p - a/3
+         -> x = -√-p - a/3
+         */
+        if q.isZero {
+            let t = √(-p)
+            let x1 = -coefficient
+            let x2 = t - coefficient
+            let x3 = -t - coefficient
+
+            if x1.isFinite {
+                return x1.real
+            }
+            if x2.isFinite {
+                return x2.real
+            }
+            if x3.isFinite {
+                return x3.real
+            }
+        }
 
         /**
          There are optimized ways of finding the root of a cubic
@@ -119,140 +304,73 @@ extension CubicBezierCurve {
          we can actually use the "discriminant"(Δ) to determine how many
          many roots/solutions to the equation are real numbers!
 
-         Discriminants are denoted with Δ. Check it out:
+         To get the discriminant value, this section walks through the algebra to get the discriminant from our `p` and `q` values:
+         https://trans4mind.com/personal_development/mathematics/polynomials/cubicAlgebra.htm#2%20Equation%20in%20p%20and%20q%20where%20neither%20zero
+
+         At the end of that section, they define the Δ to be:
+         -> Δ = (q/2)² + (p/3)³
+         */
+        let Δ: Double = (q/2)^^2 + (p/3)^^3
+
+        /**
+         Discriminants are denoted with Δ. The rules for finding out the properties of all three roots are as follows:
 
          Δ > 0: 2 real roots
          Δ = 0: 1 real root, 1 imaginary
-         Δ < 0: 2 imaginary roots (the sqrt of -1 is i)
+         Δ < 0: 2 imaginary roots
 
          In each case of the discriminant, the solutions for the roots are translated from
          here: https://trans4mind.com/personal_development/mathematics/polynomials/cubicAlgebra.htm#The_Value_of_the_Discriminant_%CE%94
          */
+        let x1: Complex<Double>
+        let x2: Complex<Double>
+        let x3: Complex<Double>
 
-        var root: Double = .zero
+        if Δ < .zero {
+            // Δ < 0: 3 real unique roots
+            // Taking the sqrt of Δ gives us a complex number so we have to solve this with trigonometry, instead.
 
-        // The value of the first coefficient after reducing to the depressed cubic
-        let simpleRoot: Double = -a/3
+            let r = √((-p/3)^^3)
+            let Φ = Complex.acos(-q.complex / 2*r)
+            let π = Double.pi.complex
 
-        let p = (3*b - a^2) / 9
-        let q = (2*a^3 - 9*a*b + 27*c) / 54
+            x1 = 2.complex * ∛r * Complex.cos(Φ / 3.complex) - coefficient
+            x2 = 2.complex * ∛r * Complex.cos((Φ + 2.complex*π) / 3.complex) - coefficient
+            x3 = 2.complex * ∛r * Complex.cos((Φ + 4.complex*π) / 3.complex) - coefficient
+        } else {
+            /**
+             There's one last piece of the puzzle missing which is another derivation of the above formulas in which we need to find
+             the values for `u` and `v` here: https://trans4mind.com/personal_development/mathematics/polynomials/cubicAlgebra.htm#mozTocId643919
 
-        let discriminant = p^3 + q^2 // Δ
+             -> u = ∛(-q/2 + √Δ)
+             -> v = ∛(q/2 + √Δ)
 
-        (0...2).map(Double.init).forEach { (i: Double) in
-            var possibleRoot: Complex<Double>
-            let rootOfUnity = i.rootOfUnity
+             Once we have `u` and `v` we can determine our roots using this formula as long as Δ isn't negative:
+             -> x₁ = u - v - a/3
+             -> x₂ = -0.5(u - v) + i√3(u + v) - a/3
+             -> x₃ = -0.5(u - v) - i√3(u + v) - a/3
+             */
 
-            if (3*p).isZero || (2*q).isZero {
-                let pRoot = ∛(-2.0*q) * rootOfUnity
-                let qRoot = (-1.0^i) * min(i, 1)
-                    * √(-3.0*p)
+            let u = ∛((-q/2).complex + √Δ)
+            let v = ∛((q/2).complex + √Δ)
+            let t = u - v
 
-                possibleRoot = p.isZero ? pRoot : qRoot
-            } else if discriminant.isZero {
-                // Δ = 0: 3 real roots, but two of them are equal
-                let power: Double = i.isZero ? 1 : 2
-                possibleRoot = 2^(2-power) *
-                    ∛(q*(-1^power))
-            } else if discriminant > .zero {
-                // Δ > 0: 1 real root, 2 imaginary roots
-                let u = ∛(√discriminant - q)
-                    * rootOfUnity
-                let v = ∛(√discriminant + q)
-                    * rootOfUnity.conjugate
-
-                possibleRoot = u - v
-            } else {
-                // Δ < 0: 3 real unique roots
-                // Taking the sqrt of Δ gives us a complex number so we can solve this with trigonometry, instead.
-
-                let r = √((-p/3)^3)
-                let phi = acos(-q/2*r.real) // Φ
-
-                possibleRoot = 2 * ∛r
-                    * cos((phi + (2*i * .pi)) / 3)
-            }
-
-            possibleRoot += simpleRoot
-
-            if possibleRoot.isFinite {
-                root = possibleRoot.real
-            }
+            x1 = t * unity.x1 - (a/3).complex
+            x2 = t * unity.x2 - (a/3).complex
+            x3 = t * unity.x3 - (a/3).complex
         }
 
-        return root
-    }
-
-    /**
-     We can generate our coefficients by expanding our formulas and simplifying
-     them in terms of t. BTW, coefficients are the thingies you multiply tⁿ by.
-
-     Let's see what that looks like:
-     -> f(t) = au³ + 3btu² + 3ct²u + dt³
-     -> f(t) = a(1-t)³ + 3bt(1-t)² + 3ct²(1-t) + dt³
-     -> f(t) = a(1-2t+t²)(1-t) + 3bt(1-2t+t²) + c(3t²-3t³) + dt³
-     -> f(t) = a(1-3t+3t²-t³) + b(3t-6t²+3t³) + c(3t²-3t³) + dt³
-     -> f(t) = (a-3at+3at²-at³) + (3bt-6bt²+3bt³) + (3ct²-3ct³) + dt³
-     -> f(t) = a + -3at + 3at² + -at³ + 3bt + -6bt² + 3bt³ + 3ct² + -3ct³ + dt³
-     -> f(t) = (dt³ - 3ct³ + 3bt³ - at³) + (3ct² - 6bt² + 3at²) - (3bt + 3at) + a
-     -> f(t) = t³(d - 3c + 3b - a) + t²(3c - 6b + 3a) - t(3b + 3a) + a
-
-
-     Each resulting equation in parentheses are the extracted coefficients from our
-     original formula! By doing this, we've converted our cubic bezier formula to
-     something a lot easier to use:
-     */
-    func coefficients(for axis: Axis) -> Coefficients {
-        // u³ + 3tu² + 3t²u + t³
-        let c0 = (axis == .horizontal) ?
-            self.c0.x : self.c0.y
-        let c1 = (axis == .horizontal) ?
-            self.c1.x : self.c1.y
-        let c2 = (axis == .horizontal) ?
-            self.c2.x : self.c2.y
-        let c3 = (axis == .horizontal) ?
-            self.c3.x : self.c3.y
-
-        return Coefficients(
-            a: c3 - 3.0*c2 + 3.0*c1 - c0,
-            b: 3.0*c2 - 6.0*c1 + 3.0*c0,
-            c: 3.0*c1 - 3.0*c0,
-            d: c0
-        )
-    }
-
-    /**
-     We already know the representation of a bezier curve is au³ + 3btu² + 3ct²u + dt³.
-     Since we converted that to at³ + bt² + ct + d through our coefficients(from:)
-     function, that means all we have left is to plug in our t in order to get our
-     exact point on the curve at that time.
-     */
-    func pointOnCurve(for time: Double) -> Progress {
-        let xCoefficients = coefficients(for: .horizontal)
-        let yCoefficients = coefficients(for: .vertical)
-        let combinedCoefficients = zip(
-            xCoefficients.all,
-            yCoefficients.all
-        )
-
-        var relativeTime = 0.0
-        var relativeValue = 0.0
-        var index = 3
-
-        combinedCoefficients.forEach { coefficient in
-            let xCoefficient = coefficient.0
-            let yCoefficient = coefficient.1
-            let tValue = pow(time, Double(index))
-
-            relativeTime += xCoefficient * tValue
-            relativeValue += yCoefficient * tValue
-
-            index -= 1
+        if x1.isFinite {
+            return x1.real
         }
-        return Progress(
-            relativeTime: relativeTime,
-            relativeValue: relativeValue
-        )
+        if x2.isFinite {
+            return x2.real
+        }
+        if x3.isFinite {
+            return x3.real
+        }
+
+        return .zero
     }
 
     /**
@@ -288,6 +406,6 @@ extension CubicBezierCurve {
         let alignedCurve = CubicBezierCurve(points: controlPoints.map {
             $0.translatedBy(dx: time).rotatedAroundOrigin()
         })
-        return pointOnCurve(for: alignedCurve.root)
+        return pointOnCurve(forTime: alignedCurve.root)
     }
 }

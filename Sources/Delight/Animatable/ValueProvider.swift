@@ -1,14 +1,7 @@
-//
-//  ValueProvider.swift
-//  Delight
-//
-//  Created by Hector Matos on 10/3/18.
-//
-
 import CoreGraphics
 import Foundation
 
-public protocol ValueProvider: class, CustomStringConvertible {
+public protocol ValueProvider: AnyObject, CustomStringConvertible {
     associatedtype Value
 
     var start: Value { get }

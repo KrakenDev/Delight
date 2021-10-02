@@ -1,10 +1,3 @@
-//
-//  Displayable.swift
-//  Delight
-//
-//  Created by Hector Matos on 9/28/18.
-//
-
 public protocol Displayable {
     static var maxFPS: Int { get }
     static var inheritedAnimationDuration: Double { get }
@@ -17,6 +10,8 @@ public protocol Displayable {
 }
 
 extension Displayable {
+    public static var maxFPS: Int { 60 }
+    public static func setAnimationDuration(_ duration: Double) {}
     public static func animate(withDuration duration: Double, delay: Double = 0.0, curve: TimingCurve, animations: @escaping AnimationBlock) {
         animate(withDuration: duration, delay: delay, curve: curve, animations: animations, completion: nil)
     }

@@ -1,10 +1,3 @@
-//
-//  CALayer+Interception.swift
-//  Delight
-//
-//  Created by Hector Matos on 10/15/18.
-//
-
 import QuartzCore
 
 extension CALayer {
@@ -20,8 +13,8 @@ extension CALayer {
 
         let hashValue = hasher.finalize()
 
-        func enqueueing<T: Animatable>(with possibleValue: T?) throws {
-            guard let value = possibleValue else { throw FailedEnqueue() }
+        func enqueueing<T: Animatable>(with possibleValue: T?) {
+            guard let value = possibleValue else { return }
 
             let valueProvider = LayerValueProvider { [weak self] in
                 self?.value(forKey: keyPath) as? T ?? value
@@ -46,19 +39,32 @@ extension CALayer {
             }
         }
 
-        try? enqueueing(with: oldValue as? CGFloat)
-        try? enqueueing(with: oldValue as? ControlPoint)
-        try? enqueueing(with: oldValue as? CGPoint)
-        try? enqueueing(with: oldValue as? CGSize)
-        try? enqueueing(with: oldValue as? CGRect)
-        try? enqueueing(with: oldValue as? CGVector)
-        try? enqueueing(with: oldValue as? CGAffineTransform)
-        try? enqueueing(with: oldValue as? CATransform3D)
-        try? enqueueing(with: oldValue as? Double)
-        try? enqueueing(with: oldValue as? Float)
-        try? enqueueing(with: CGPath.value(from: oldValue))
-        try? enqueueing(with: CGColor.value(from: oldValue))
+        enqueueing(with: oldValue as? CGFloat)
+        enqueueing(with: oldValue as? ControlPoint)
+        enqueueing(with: oldValue as? CGPoint)
+        enqueueing(with: oldValue as? CGSize)
+        enqueueing(with: oldValue as? CGRect)
+        enqueueing(with: oldValue as? CGVector)
+        enqueueing(with: oldValue as? CGAffineTransform)
+        enqueueing(with: oldValue as? CATransform3D)
+        enqueueing(with: oldValue as? Double)
+        enqueueing(with: oldValue as? Float)
+        enqueueing(with: CGPath.value(from: oldValue))
+        enqueueing(with: CGColor.value(from: oldValue))
 
         return delightfulAction(forKey: keyPath)
+    }
+}
+
+private protocol CFTypeProtocol {
+    static var typeID: CFTypeID { get }
+}
+
+extension CGPath: CFTypeProtocol {}
+extension CGColor: CFTypeProtocol {}
+extension CFTypeProtocol {
+    static func value<T>(from valueToCast: T) -> Self? {
+        guard CFGetTypeID(valueToCast as CFTypeRef) == typeID else { return nil }
+        return valueToCast as? Self
     }
 }

@@ -1,11 +1,4 @@
-//
-//  Curve.swift
-//  Delight
-//
-//  Created by Hector Matos on 9/13/18.
-//
-
-import UIKit
+import CoreGraphics
 
 public enum TimingCurve {
     case inherited

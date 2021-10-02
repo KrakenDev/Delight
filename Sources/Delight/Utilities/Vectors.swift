@@ -1,9 +1,9 @@
 import Foundation
-import UIKit
+import CoreGraphics
 
 // MARK: - Vector
 
-protocol Vector {
+public protocol Vector {
     associatedtype FloatType: BinaryFloatingPoint & Comparable
 
     var x: FloatType { get set }
@@ -51,7 +51,7 @@ extension CGPoint: Vector {}
 
 // MARK: - Default Conformance
 
-extension Vector {
+public extension Vector {
     init(x: FloatType, y: FloatType) {
         self = Self()
 
@@ -82,12 +82,12 @@ extension Vector {
 
 // MARK: Axis Functions
 
-enum Axis {
+public enum Axis {
     case x
     case y
 }
 
-extension Vector {
+public extension Vector {
     func value(for axis: Axis) -> FloatType {
         axis == .x ? x : y
     }
@@ -108,7 +108,7 @@ extension BinaryFloatingPoint {
 
 // MARK: - Vector Operations
 
-extension Vector {
+public extension Vector {
 
     // MARK: - Addition
 

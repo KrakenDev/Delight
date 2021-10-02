@@ -1,10 +1,3 @@
-//
-//  CATransaction+Delight.swift
-//  Delight
-//
-//  Created by Hector Matos on 10/15/18.
-//
-
 import QuartzCore
 
 typealias Transaction = CATransaction

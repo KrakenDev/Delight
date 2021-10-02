@@ -1,10 +1,3 @@
-//
-//  AnimationContainer.swift
-//  Delight
-//
-//  Created by Hector Matos on 10/3/18.
-//
-
 /**
  * Representation of animation blocks that can contain property updates. Since animations are
  * inherently keyframe data sources (they are aware of timings and such), this protocol inherits

@@ -1,20 +1,22 @@
-//
-//  CGPath+Animatable.swift
-//  Delight
-//
-//  Created by Hector Matos on 9/14/18.
-//
-
 import Foundation
 import CoreGraphics
-
-func element<T>(_ value: T) -> T {
-    return value
-}
 
 // MARK: CGPath Interpolation (This one's a doozy)
 
 extension CGPath: Animatable {
+    private class UnsafeBox<T> {
+        private(set) var unbox: T
+
+        init(_ value: T) {
+            unbox = value
+        }
+
+        /// Use this method to mutate the boxed value.
+        func unboxedValue(_ mutation: (inout T) -> Void) {
+            mutation(&unbox)
+        }
+    }
+
     /**
      This was ripped STRAIGHT from https://oleb.net/blog/2015/06/c-callbacks-in-swift/
      */
@@ -80,7 +82,7 @@ extension CGPath: Animatable {
     public var path: Path {
         let convertPath = Path()
 
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, macOS 10.13, *) {
             applyWithBlock {
                 CGPath.appendElement(cgPathElement: $0, path: convertPath)
             }
@@ -121,15 +123,13 @@ extension CGPath: Animatable {
             let partCount = Swift.max(fromSegments.count, toSegments.count)
             fromSegments = fromPath.segmented(by: partCount)
             toSegments = toPath.segmented(by: partCount)
-            allPaths.append(newPath)
 
             reorder(segments: &fromSegments, whereFirstElementIsMostSimilarTo: fromPath.highestCenteredElement)
             reorder(segments: &toSegments, whereFirstElementIsMostSimilarTo: toPath.highestCenteredElement)
         }
         
-        zip(fromSegments, toSegments)
-            .map(element).forEach { z in
-                z.0.lerp(to: z.1, with: progress).add(to: newPath)
+        zip(fromSegments, toSegments).forEach { z in
+            z.0.lerp(to: z.1, with: progress).add(to: newPath)
         }
 
         return newPath
@@ -150,5 +150,3 @@ extension CGPath: Animatable {
         }
     }
 }
-
-public var allPaths: [CGPath] = []

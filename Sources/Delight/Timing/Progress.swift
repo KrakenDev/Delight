@@ -1,10 +1,3 @@
-//
-//  Progress.swift
-//  Delight
-//
-//  Created by Hector Matos on 11/17/18.
-//
-
 import Foundation
 
 public struct Progress: TimingProgress {

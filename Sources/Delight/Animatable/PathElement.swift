@@ -1,10 +1,3 @@
-//
-//  PathElement.swift
-//  Delight
-//
-//  Created by Hector Matos on 9/14/18.
-//
-
 import Foundation
 import CoreGraphics
 
@@ -93,27 +86,6 @@ extension PathElement: Animatable {
             control2: CGPoint(point: oldCurve.c2.lerp(to: newCurve.c2, with: progress)),
             destination: CGPoint(point: oldCurve.c3.lerp(to: newCurve.c3, with: progress))
         )
-    }
-}
-
-extension PathElement: Segmentable {
-    public func segmented(by amount: Int) -> [PathElement] {
-        var segments: [PathElement] = []
-
-        switch operation {
-        case .move:
-            segments.append(self)
-        case .openSubpath:
-            segments.append(PathElement(operation: .move, destination: destination))
-
-            var element = self
-            element.operation = .addCurve
-            segments.append(contentsOf: element.segmented(by: amount - 1))
-        case .addLine, .closeSubpath, .addQuadCurve, .addCurve:
-            segments.append(contentsOf: bezierCurve.segmented(by: amount).map(\.pathElement))
-        }
-
-        return segments
     }
 }
 

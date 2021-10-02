@@ -1,11 +1,5 @@
-//
-//  AnimationQueue.swift
-//  Delight
-//
-//  Created by Hector Matos on 9/13/18.
-//
-
 import Foundation
+import QuartzCore
 
 @objc public class AnimationQueue: NSObject {
     typealias QueuedAnimation = AnimationContainer
@@ -38,7 +32,9 @@ import Foundation
      * API should be used like you would use CATransaction.begin()
      */
     static func begin() {
-        View.prepare()
+        if queueStack.isEmpty {
+            prepare()
+        }
 
         let newQueue = AnimationQueue()
         newQueue.previousQueue = queueStack.last
@@ -66,8 +62,20 @@ import Foundation
         queueStack.removeLast()
 
         if queueStack.isEmpty {
-            View.cleanup()
+            cleanup()
         }
+    }
+
+    private static func prepare() {
+        let oldActionForKey = #selector(CALayer.action(forKey:))
+        let newActionForKey = #selector(CALayer.delightfulAction(forKey:))
+        swizzle(CALayer.self, .instance, method: oldActionForKey, with: newActionForKey)
+    }
+
+    private static func cleanup() {
+        let oldActionForKey = #selector(CALayer.delightfulAction(forKey:))
+        let newActionForKey = #selector(CALayer.action(forKey:))
+        swizzle(CALayer.self, .instance, method: oldActionForKey, with: newActionForKey)
     }
 }
 

@@ -1,10 +1,3 @@
-//
-//  LayerAnimator.swift
-//  Delight
-//
-//  Created by Hector Matos on 9/13/18.
-//
-
 import CoreGraphics
 import Foundation
 import ObjectiveC

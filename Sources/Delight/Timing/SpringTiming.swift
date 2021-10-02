@@ -1,11 +1,5 @@
-//
-//  SpringContainer.swift
-//  Delight
-//
-//  Created by Hector Matos on 11/17/18.
-//
-
 import Foundation
+import Numerics
 
 public struct SpringTiming {
     public let mass = 1.0
@@ -21,9 +15,9 @@ extension SpringTiming: TimingParameters {
         }
 
         let beta = damping / (2 * mass)
-        let omega0 = (√(stiffness / mass).complex).real
-        let omega1 = (√(omega0^2 - beta^2).complex).real
-        let omega2 = (√(beta^2 - omega0^2).complex).real
+        let omega0 = (√(stiffness / mass)).real
+        let omega1 = (√(omega0^^2 - beta^^2)).real
+        let omega2 = (√(beta^^2 - omega0^^2)).real
 
         let x0 = -1.0
         let relativeValue: Double

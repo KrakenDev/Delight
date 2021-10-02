@@ -1,10 +1,3 @@
-//
-//  TimingParameters.swift
-//  Delight
-//
-//  Created by Hector Matos on 11/17/18.
-//
-
 import Foundation
 
 public protocol TimingProgress: CustomStringConvertible {

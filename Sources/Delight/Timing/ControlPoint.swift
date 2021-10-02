@@ -1,11 +1,4 @@
-//
-//  ControlPoint.swift
-//  Delight-iOS
-//
-//  Created by Hector Matos on 9/13/18.
-//
-
-import UIKit
+import CoreGraphics
 
 typealias TimingFunctionPoint = [Float]
 
@@ -48,7 +41,7 @@ extension ControlPoint: CustomStringConvertible {
     }
 }
 
-extension CGPoint {
+public extension CGPoint {
     init(point: ControlPoint) {
         self.init(x: point.x, y: point.y)
     }

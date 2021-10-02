@@ -1,13 +1,6 @@
-//
-//  Keyframe.swift
-//  Delight
-//
-//  Created by Hector Matos on 9/28/18.
-//
-
 import CoreGraphics
 
-public protocol Keyframe: class, Hashable, Comparable {
+public protocol Keyframe: AnyObject, Hashable, Comparable {
     associatedtype AnimationInstance: Animation
     associatedtype KeyframeValueProvider: ValueProvider where KeyframeValueProvider.Value == AnimationInstance.Value
 

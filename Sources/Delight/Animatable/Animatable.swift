@@ -1,13 +1,5 @@
-//
-//  Animatable.swift
-//  Utilities
-//
-//  Created by Hector Matos on 03/08/2018.
-//  Copyright © 2018 KrakenDev, LLC. All rights reserved.
-//
-
 public protocol Animatable {
-    associatedtype Value: Animatable where Value.Progression == Progression, Self == Value
+    associatedtype Value where Value.Progression == Progression, Self == Value
     associatedtype Progression: BinaryFloatingPoint & Animatable where Progression.Stride == Progression
 
     func lerp(to value: Value, with progression: Progression) -> Value

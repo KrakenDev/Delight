@@ -1,11 +1,3 @@
-//
-//  InterpolatedAnimation.swift
-//  Delight
-//
-//  Created by Hector Matos on 02/14/2018.
-//  Copyright © 2018 KrakenDev, LLC. All rights reserved.
-//
-
 import Foundation
 
 public class KeyframeTiming: TimingParameters, Overlappable {

@@ -1,10 +1,3 @@
-//
-//  KeyPathProvider.swift
-//  Delight
-//
-//  Created by Hector Matos on 9/14/18.
-//
-
 public protocol KeyPathProvider: Animatable {
     associatedtype PathValue: Animatable
     static var keyPaths: [WritableKeyPath<Self, PathValue>] { get }

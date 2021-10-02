@@ -1,21 +1,31 @@
-//
-//  QuartzCore+Animatable.swift
-//  Delight
-//
-//  Created by Hector Matos on 10/15/18.
-//
-
 import CoreGraphics
 import QuartzCore
 
 extension CGFloat: Animatable {}
 
 extension ControlPoint: KeyPathProvider {
-    public static let keyPaths = [\x, \y]
+    public static let keyPaths: [WritableKeyPath<Self, Double>] = [\.x, \.y]
 }
 
 extension CGPoint: KeyPathProvider {
-    public static let keyPaths = [\x, \y]
+    public static let keyPaths: [WritableKeyPath<Self, CGFloat>] = [\.x, \.y]
+}
+
+extension CGVector: KeyPathProvider {
+    public static let keyPaths: [WritableKeyPath<Self, CGFloat>] = [\.dx, \.dy]
+}
+
+extension CGAffineTransform: KeyPathProvider {
+    public static let keyPaths: [WritableKeyPath<Self, CGFloat>] = [\.a, \.b, \.c, \.d, \.tx, \.ty]
+}
+
+extension CATransform3D: KeyPathProvider {
+    public static let keyPaths: [WritableKeyPath<Self, CGFloat>] = [
+        \.m11, \.m12, \.m13, \.m14,
+        \.m21, \.m22, \.m23, \.m24,
+        \.m31, \.m32, \.m33, \.m34,
+        \.m41, \.m42, \.m43, \.m44
+    ]
 }
 
 extension CGSize: Animatable {
@@ -35,21 +45,4 @@ extension CGRect: Animatable {
             size: size.lerp(to: value.size, with: progression)
         )
     }
-}
-
-extension CGVector: KeyPathProvider {
-    public static let keyPaths = [\dx, \dy]
-}
-
-extension CGAffineTransform: KeyPathProvider {
-    public static let keyPaths = [\a, \b, \c, \d, \tx, \ty]
-}
-
-extension CATransform3D: KeyPathProvider {
-    public static let keyPaths = [
-        \m11, \m12, \m13, \m14,
-        \m21, \m22, \m23, \m24,
-        \m31, \m32, \m33, \m34,
-        \m41, \m42, \m43, \m44
-    ]
 }

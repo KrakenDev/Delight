@@ -1,10 +1,3 @@
-//
-//  Animation.swift
-//  Delight
-//
-//  Created by Hector Matos on 9/28/18.
-//
-
 import Foundation
 
 public typealias VoidBlock = () -> Void
@@ -12,7 +5,7 @@ public typealias AnimationBlock = VoidBlock
 public typealias AnimationCompletion = (Bool) -> Void
 public typealias AnimationExecution<T: Keyframe> = ([T]) -> Void
 
-public protocol Animation: class {
+public protocol Animation: AnyObject {
     associatedtype Value: Animatable
 
     var duration: Value.Progression { get set }

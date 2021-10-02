@@ -1,10 +1,3 @@
-//
-//  Transaction.swift
-//  Delight
-//
-//  Created by Hector Matos on 10/15/18.
-//
-
 import Foundation
 
 public protocol Transactor {
