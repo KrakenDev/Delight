@@ -1,15 +1,8 @@
 import Foundation
-import Numerics
 
 extension Int {
-    var complex: Complex<Double> {
-        Complex(Double(self))
-    }
-}
-
-extension Double {
-    var complex: Complex<Double> {
-        Complex(self)
+    var reciprocal: Double {
+        Double(self).reciprocal ?? 1.0/Double(self)
     }
 }
 
@@ -21,42 +14,33 @@ precedencegroup ExponentPrecendence {
 }
 
 infix operator ^^: ExponentPrecendence
-public func ^^ <N: BinaryInteger>(base: N, power: N) -> N {
-    return N(pow(Double(base), Double(power)))
-}
-
-public func ^^ <N: BinaryFloatingPoint>(base: N, power: N) -> N {
-    return N(pow(Double(base), Double(power)))
-}
-
 prefix operator √
-prefix func √ <T: BinaryInteger>(_ value: T) -> Complex<Double> {
-    return √Double(value)
-}
-prefix func √ <T: Real>(_ value: T) -> Complex<T> {
-    return √Complex(value)
-}
-prefix func √ <T: Real>(_ value: Complex<T>) -> Complex<T> {
-    return .sqrt(value)
-}
-
 prefix operator ∛
-prefix func ∛ <T: BinaryInteger>(_ value: T) -> Complex<Double> {
-    return ∛Double(value)
-}
-prefix func ∛ <T: Real>(_ value: T) -> Complex<T> {
-    return ∛Complex(value)
-}
-prefix func ∛ <T: Real>(_ value: Complex<T>) -> Complex<T> {
-    return .root(value, 3)
+
+extension BinaryInteger {
+    static func ^^ (lhs: Self, rhs: Int) -> Double {
+        pow(Double(lhs), Double(rhs))
+    }
+
+    prefix static func √ (_ value: Self) -> Double {
+        sqrt(Double(value))
+    }
+
+    prefix static func ∛ (_ value: Self) -> Double {
+        cbrt(Double(value))
+    }
 }
 
-infix operator ± : AdditionPrecedence
-func ± <T: Numeric>(lhs: T, rhs: T) -> (T, T) {
-    return (lhs + rhs, lhs - rhs)
-}
+extension BinaryFloatingPoint {
+    static func ^^ (lhs: Self, rhs: Int) -> Double {
+        pow(Double(lhs), Double(rhs))
+    }
 
-prefix operator ±
-prefix func ± <T: Numeric>(_ value: T) -> (T, T) {
-    return 0 ± value
+    prefix static func √ (_ value: Self) -> Double {
+        sqrt(Double(value))
+    }
+
+    prefix static func ∛ (_ value: Self) -> Double {
+        cbrt(Double(value))
+    }
 }

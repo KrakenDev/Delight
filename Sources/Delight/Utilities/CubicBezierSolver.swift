@@ -33,18 +33,6 @@ extension ControlPoint {
     }
 }
 
-/// Formula for the cube roots of unity was taken from
-/// https://en.wikipedia.org/wiki/Root_of_unity#Explicit_expressions_in_low_degrees
-///
-/// unity = (-1 ± i√3) / 2
-private let i = Complex<Double>.i
-private let unity = (
-    x1: 1.complex,
-    x2: ((-1).complex + √(3) * i) / 2.complex,
-    x3: ((-1).complex - √(3) * i) / 2.complex
-)
-
-
 // MARK: - Bezier Solvers
 
 /**
@@ -171,9 +159,9 @@ extension CubicBezierCurve {
          */
         let coeffs = coefficients(for: .value)
 
-        let a: Double = coeffs.b / coeffs.a
-        let b: Double = coeffs.c / coeffs.a
-        let c: Double = coeffs.d / coeffs.a
+        let a = coeffs.b / coeffs.a
+        let b = coeffs.c / coeffs.a
+        let c = coeffs.d / coeffs.a
 
         /**
          Now that we have values for each coefficient in the equation of the form x³ + ax² + bx + c, the math checks out to reduce
@@ -192,7 +180,7 @@ extension CubicBezierCurve {
         let q = (2*a^^3 - 9*a*b + 27*c) / 27
 
         // When reducing the cubic formula and solving for roots, this coefficient is used often.
-        let coefficient: Complex<Double> = Complex(a/3)
+        let coefficient = a/3
 
         /**
          After getting concrete values for p and q, there are some easy outs we can take to immediately extract the root of the formula but only if
@@ -216,27 +204,19 @@ extension CubicBezierCurve {
          -> t - a/3 = (∛-q) - a/3
          -> x = (∛-q) - a/3
 
-         To get all three roots of a cube root, we multiply the output of ∛x by the three cube roots of unity. This turns
-         our three possible roots into:
-         -> x = unity1(∛-q) - a/3
-         -> x = unity2(∛-q) - a/3
-         -> x = unity3(∛-q) - a/3
+         To get all three roots of a cube root, we multiply the output of ∛x by the three cube roots of unity.
+         Formula for the cube roots of unity was taken from
+         https://en.wikipedia.org/wiki/Root_of_unity#Explicit_expressions_in_low_degrees
+
+         This turns our three possible roots into:
+         -> x₁ = ∛(-q) - a/3
+         -> x₂ = ∛(-q)[-1/2 ± √(3)i/2] - a/3
+         -> x₃ = ∛(-q)[-1/2 ± √(3)i/2] - a/3
          */
         if p.isZero {
-            let t = ∛(-q)
-            let x1 = t * unity.x1 - coefficient
-            let x2 = t * unity.x2 - coefficient
-            let x3 = t * unity.x3 - coefficient
-
-            if x1.isFinite {
-                return x1.real
-            }
-            if x2.isFinite {
-                return x2.real
-            }
-            if x3.isFinite {
-                return x3.real
-            }
+            // Since we only care about real values, we won't bother computing roots of unity here
+            print("p is zero", ∛(-q) - coefficient)
+            return ∛(-q) - coefficient
         }
 
         /**
@@ -250,7 +230,7 @@ extension CubicBezierCurve {
 
          Since t = x + a/3 (derived from x=t-a/3) and we know that t must equal zero, we get our first root:
          -> 0 = x + a/3
-         -> x = -a/3
+         -> x₁ = -a/3
 
          But this is only one of three roots! The other two can be taken by solving for `0 = t³ + pt`
          -> 0 = t³ + pt
@@ -265,28 +245,17 @@ extension CubicBezierCurve {
          -> x = √-p - a/3
 
          Multiply `√-p` (AKA 't') by both roots of one (-1 & 1) and you get:
-         -> x = ±√-p - a/3
+         -> x₂,x₃ = ±√-p - a/3
 
          That leaves us with our three roots when `q` is zero:
-         -> x = -a/3
-         -> x = √-p - a/3
-         -> x = -√-p - a/3
+         -> x₁ = -a/3
+         -> x₂ = √-p - a/3
+         -> x₃ = -√-p - a/3
          */
         if q.isZero {
-            let t = √(-p)
-            let x1 = -coefficient
-            let x2 = t - coefficient
-            let x3 = -t - coefficient
-
-            if x1.isFinite {
-                return x1.real
-            }
-            if x2.isFinite {
-                return x2.real
-            }
-            if x3.isFinite {
-                return x3.real
-            }
+            // Since we only care about real values, we won't bother computing with roots of unity here
+            print("q is zero", -coefficient)
+            return -coefficient
         }
 
         /**
@@ -310,7 +279,7 @@ extension CubicBezierCurve {
          At the end of that section, they define the Δ to be:
          -> Δ = (q/2)² + (p/3)³
          */
-        let Δ: Double = (q/2)^^2 + (p/3)^^3
+        let Δ = (q/2)^^2 + (p/3)^^3
 
         /**
          Discriminants are denoted with Δ. The rules for finding out the properties of all three roots are as follows:
@@ -322,21 +291,30 @@ extension CubicBezierCurve {
          In each case of the discriminant, the solutions for the roots are translated from
          here: https://trans4mind.com/personal_development/mathematics/polynomials/cubicAlgebra.htm#The_Value_of_the_Discriminant_%CE%94
          */
-        let x1: Complex<Double>
-        let x2: Complex<Double>
-        let x3: Complex<Double>
-
         if Δ < .zero {
             // Δ < 0: 3 real unique roots
             // Taking the sqrt of Δ gives us a complex number so we have to solve this with trigonometry, instead.
 
             let r = √((-p/3)^^3)
-            let Φ = Complex.acos(-q.complex / 2*r)
-            let π = Double.pi.complex
+            let Φ = acos(-q / 2*r)
+            let π = Double.pi
 
-            x1 = 2.complex * ∛r * Complex.cos(Φ / 3.complex) - coefficient
-            x2 = 2.complex * ∛r * Complex.cos((Φ + 2.complex*π) / 3.complex) - coefficient
-            x3 = 2.complex * ∛r * Complex.cos((Φ + 4.complex*π) / 3.complex) - coefficient
+            let x1 = 2 * ∛r * cos(Φ / 3) - coefficient
+            let x2 = 2 * ∛r * cos((Φ + 2*π) / 3) - coefficient
+            let x3 = 2 * ∛r * cos((Φ + 4*π) / 3) - coefficient
+
+            print("Δ < .zero", x1, x2, x3)
+
+            // We're specifically looking for the root between 0 and 1
+            if (0.0...1.0).contains(x1) {
+                return x1
+            }
+            if (0.0...1.0).contains(x2) {
+                return x2
+            }
+            if (0.0...1.0).contains(x3) {
+                return x3
+            }
         } else {
             /**
              There's one last piece of the puzzle missing which is another derivation of the above formulas in which we need to find
@@ -351,25 +329,28 @@ extension CubicBezierCurve {
              -> x₃ = -0.5(u - v) - i√3(u + v) - a/3
              */
 
-            let u = ∛((-q/2).complex + √Δ)
-            let v = ∛((q/2).complex + √Δ)
+            let u = ∛(-q/2 + √Δ)
+            let v = ∛(q/2 + √Δ)
             let t = u - v
 
-            x1 = t * unity.x1 - (a/3).complex
-            x2 = t * unity.x2 - (a/3).complex
-            x3 = t * unity.x3 - (a/3).complex
+            let x1 = Complex(t - coefficient)
+            let x2 = Complex(-t/2) + Complex(u + v, √3) - Complex(coefficient)
+            let x3 = Complex(-t/2) - Complex(u + v, √3) - Complex(coefficient)
+
+            print("Δ >= .zero", x1, x2, x3)
+
+            if x1.isFinite {
+                return x1.real
+            }
+            if x2.isFinite {
+                return x2.real
+            }
+            if x3.isFinite {
+                return x3.real
+            }
         }
 
-        if x1.isFinite {
-            return x1.real
-        }
-        if x2.isFinite {
-            return x2.real
-        }
-        if x3.isFinite {
-            return x3.real
-        }
-
+        print("zero")
         return .zero
     }
 

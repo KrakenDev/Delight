@@ -15,9 +15,9 @@ extension SpringTiming: TimingParameters {
         }
 
         let beta = damping / (2 * mass)
-        let omega0 = (√(stiffness / mass)).real
-        let omega1 = (√(omega0^^2 - beta^^2)).real
-        let omega2 = (√(beta^^2 - omega0^^2)).real
+        let omega0 = √(stiffness / mass)
+        let omega1 = √(omega0^^2 - beta^^2)
+        let omega2 = √(beta^^2 - omega0^^2)
 
         let x0 = -1.0
         let relativeValue: Double
