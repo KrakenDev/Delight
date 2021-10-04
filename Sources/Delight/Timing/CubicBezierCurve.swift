@@ -34,6 +34,19 @@ public struct CubicBezierCurve {
         }
     }
 
+    public var boundingBox: CGRect {
+        CGRect(
+            origin: CGPoint(
+                x: controlPoints.map(\.x).min(by: <) ?? .zero,
+                y: controlPoints.map(\.y).min(by: <) ?? .zero
+            ),
+            size: CGSize(
+                width: controlPoints.map(\.x).max(by: <) ?? .zero,
+                height: controlPoints.map(\.y).max(by: <) ?? .zero
+            )
+        )
+    }
+
     public static let zero = CubicBezierCurve(.zero, .zero)
 
     public init(_ point1: ControlPoint, _ point2: ControlPoint) {

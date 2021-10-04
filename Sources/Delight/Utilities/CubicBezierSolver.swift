@@ -157,7 +157,7 @@ extension CubicBezierCurve {
          -> 0 = x³ + (b/a)x² + (c/a)x + (d/a)
          -> 0 = x³ + ax² + bx + c
          */
-        let coeffs = coefficients(for: .value)
+        let coeffs = coefficients(for: .time)
 
         let a = coeffs.b / coeffs.a
         let b = coeffs.c / coeffs.a
@@ -303,9 +303,8 @@ extension CubicBezierCurve {
             let x2 = 2 * ∛r * cos((Φ + 2*π) / 3) - coefficient
             let x3 = 2 * ∛r * cos((Φ + 4*π) / 3) - coefficient
 
-            print("Δ < .zero", x1, x2, x3)
-
             // We're specifically looking for the root between 0 and 1
+            // TODO: don't constrain to 0 and 1 and constrain to maxY and min Y of center control points
             if (0.0...1.0).contains(x1) {
                 return x1
             }
@@ -337,7 +336,8 @@ extension CubicBezierCurve {
             let x2 = Complex(-t/2) + Complex(u + v, √3) - Complex(coefficient)
             let x3 = Complex(-t/2) - Complex(u + v, √3) - Complex(coefficient)
 
-            print("Δ >= .zero", x1, x2, x3)
+            // Δ >= 0: 2 equal real roots or 1 real root.
+            // Either way, this means we just need the first real root
 
             if x1.isFinite {
                 return x1.real
@@ -350,7 +350,6 @@ extension CubicBezierCurve {
             }
         }
 
-        print("zero")
         return .zero
     }
 
@@ -385,7 +384,7 @@ extension CubicBezierCurve {
          with the intersection coordinate we're trying to find.
          */
         let alignedCurve = CubicBezierCurve(points: controlPoints.map {
-            $0.translatedBy(dx: time).rotatedAroundOrigin()
+            $0.translatedBy(dx: -time)
         })
         return pointOnCurve(forTime: alignedCurve.root)
     }

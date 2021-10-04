@@ -15,8 +15,6 @@ public protocol Vector {
     func distance(to other: Self) -> FloatType
     func slope(to other: Self) -> FloatType
 
-    static func increasingOrder(forAxis axis: Axis) -> (Self, Self) -> Bool
-
     // MARK: - Addition
     static func +(lhs: FloatType, rhs: Self) -> Self
     static func +(lhs: Self, rhs: FloatType) -> Self
@@ -76,23 +74,6 @@ public extension Vector {
     func slope(to other: Self) -> FloatType {
         guard other.x != x else { return 0 }
         return (other.y - y) / (other.x - x)
-    }
-}
-
-
-// MARK: Axis Functions
-
-public enum Axis {
-    case x
-    case y
-}
-
-public extension Vector {
-    func value(for axis: Axis) -> FloatType {
-        axis == .x ? x : y
-    }
-    static func increasingOrder(forAxis axis: Axis) -> (Self, Self) -> Bool {
-        { $0.value(for: axis) < $1.value(for: axis) }
     }
 }
 
