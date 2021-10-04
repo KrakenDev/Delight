@@ -303,15 +303,15 @@ extension CubicBezierCurve {
             let x2 = 2 * ∛r * cos((Φ + 2*π) / 3) - coefficient
             let x3 = 2 * ∛r * cos((Φ + 4*π) / 3) - coefficient
 
-            // We're specifically looking for the root between 0 and 1
-            // TODO: don't constrain to 0 and 1 and constrain to maxY and min Y of center control points
-            if (0.0...1.0).contains(x1) {
+            // We're specifically looking for the root between out highest and lowest control points
+            let bounds = boundingBox.minY...boundingBox.maxY
+            if bounds.contains(x1) {
                 return x1
             }
-            if (0.0...1.0).contains(x2) {
+            if bounds.contains(x2) {
                 return x2
             }
-            if (0.0...1.0).contains(x3) {
+            if bounds.contains(x3) {
                 return x3
             }
         } else {
